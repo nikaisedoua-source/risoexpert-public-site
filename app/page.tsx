@@ -1,5 +1,6 @@
 import RequestForm from "./request-form";
 import VisitorInsights from "./visitor-insights";
+import MachineShowcase from "./machine-showcase";
 import { headers } from "next/headers";
 
 const phone = "+2250777808051";
@@ -39,7 +40,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#demande">Dépannage</a><a href="#application">Application</a><a href="#visiteurs">Visiteurs</a></nav>
+          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#demande">Dépannage</a><a href="#application">Application</a><a href="#visiteurs">Visiteurs</a></nav>
           <a className="navAction" href={whatsapp}>WhatsApp</a>
         </div>
       </header>
@@ -64,6 +65,8 @@ export default async function Home() {
         <div className="sectionHeading"><div><p className="kicker">Une expertise de proximité</p><h2>De la première alerte au retour en production.</h2></div><p>Un interlocuteur unique pour comprendre la panne, préparer l’intervention et suivre chaque machine dans la durée.</p></div>
         <div className="serviceGrid">{services.map(([title, text], index) => <article className="serviceCard" key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
+
+      <MachineShowcase />
 
       <section className="process"><div className="shell processGrid"><div><p className="kicker gold">Simple et transparent</p><h2>Trois étapes. Une machine remise en service.</h2></div><ol><li><b>01</b><div><strong>Décrivez la panne</strong><span>Modèle, symptômes, message d’erreur et localisation.</span></div></li><li><b>02</b><div><strong>Recevez une première orientation</strong><span>Diagnostic à distance et préparation du déplacement.</span></div></li><li><b>03</b><div><strong>Suivez l’intervention</strong><span>Rendez-vous, devis et historique disponibles.</span></div></li></ol></div></section>
 
