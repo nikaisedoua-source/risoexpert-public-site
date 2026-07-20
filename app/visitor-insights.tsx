@@ -16,6 +16,38 @@ function countryFlag(code: string) {
 
 export default function VisitorInsights() {
   const [data, setData] = useState<VisitData | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [locationMessage, setLocationMessage] = useState("");
+
+  async function locateAndRecord(force = false) {
+    setLocating(true);
+    setLocationMessage("");
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const cached = localStorage.getItem("risoexpert_geo_v2");
+      const parsed = cached ? JSON.parse(cached) : null;
+      let location = !force && parsed?.day === today ? parsed.location : null;
+      if (!location) {
+        const geoResponse = await fetch("https://ipwho.is/?fields=success,city,country_code,latitude,longitude&lang=fr");
+        const geo = geoResponse.ok ? await geoResponse.json() : null;
+        if (!geo?.success || !geo.city || !geo.country_code) throw new Error("location-unavailable");
+        location = { city: geo.city, country: geo.country_code, latitude: geo.latitude, longitude: geo.longitude };
+        localStorage.setItem("risoexpert_geo_v2", JSON.stringify({ day: today, location }));
+      }
+      const response = await fetch("/api/visits", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(location),
+      });
+      if (!response.ok) throw new Error("record-failed");
+      setData(await response.json());
+      setLocationMessage(`${countryFlag(location.country)} ${location.city} a été localisée.`);
+    } catch {
+      setLocationMessage("La ville n’a pas pu être détectée. Réessayez dans quelques instants.");
+    } finally {
+      setLocating(false);
+    }
+  }
 
   useEffect(() => {
     let active = true;
@@ -23,29 +55,7 @@ export default function VisitorInsights() {
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then((snapshot) => { if (active) setData(snapshot); })
       .catch(() => undefined);
-    const today = new Date().toISOString().slice(0, 10);
-    const locate = localStorage.getItem("risoexpert_geo_day") === today
-      ? Promise.resolve({})
-      : fetch("https://ipwho.is/?fields=success,city,country_code,latitude,longitude&lang=fr")
-          .then((response) => response.ok ? response.json() : {})
-          .then((location) => {
-            localStorage.setItem("risoexpert_geo_day", today);
-            return location?.success ? {
-              city: location.city,
-              country: location.country_code,
-              latitude: location.latitude,
-              longitude: location.longitude,
-            } : {};
-          })
-          .catch(() => ({}));
-    locate.then((location) => fetch("/api/visits", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(location),
-    }))
-      .then((response) => response.ok ? response.json() : Promise.reject())
-      .then((snapshot) => { if (active) setData(snapshot); })
-      .catch(() => setData({ total: 0, locations: [] }));
+    locateAndRecord().catch(() => undefined);
     const timer = window.setInterval(refresh, 60_000);
     return () => { active = false; window.clearInterval(timer); };
   }, []);
@@ -86,6 +96,10 @@ export default function VisitorInsights() {
               })}
             </svg>
             <span className="mapCaption">Origine approximative par ville — aucune adresse IP conservée</span>
+            <div className="locationAction">
+              <button type="button" onClick={() => locateAndRecord(true)} disabled={locating}>{locating ? "Détection en cours…" : "Détecter ma ville"}</button>
+              {locationMessage && <span role="status">{locationMessage}</span>}
+            </div>
           </div>
           <div className="cityChart" aria-label="Nombre de visites par ville">
             <h3>Visites par ville</h3>
