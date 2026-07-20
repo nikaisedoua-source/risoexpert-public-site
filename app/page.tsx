@@ -1,4 +1,5 @@
 const whatsapp = "https://wa.me/2250777808051?text=Bonjour%2C%20j%E2%80%99ai%20besoin%20d%E2%80%99un%20d%C3%A9pannage%20RISO.%20Mod%C3%A8le%20%3A%20%E2%80%A6%20Probl%C3%A8me%20%3A%20%E2%80%A6%20Commune%20%3A%20%E2%80%A6";
+const facebook = "https://www.facebook.com/people/Maintenancier-Riso/61581266351611/";
 
 const services = [
   ["Diagnostic rapide", "Analyse de la panne à distance par photo ou vidéo, puis intervention si nécessaire."],
@@ -14,6 +15,7 @@ export default function Home() {
     name: "RISO ASSIST PRO",
     description: "Technicien indépendant spécialisé en assistance et maintenance de duplicopieurs RISO en Côte d’Ivoire.",
     telephone: "+2250777808051",
+    sameAs: [facebook],
     areaServed: "Côte d’Ivoire",
     address: { "@type": "PostalAddress", addressLocality: "Ebimpé", addressCountry: "CI" },
   };
@@ -24,7 +26,7 @@ export default function Home() {
       <header className="nav shell">
         <a className="brand" href="#accueil"><span>RA</span> RISO ASSIST PRO</a>
         <nav aria-label="Navigation principale">
-          <a href="#services">Services</a><a href="#methode">Comment ça marche</a><a href="#contact">Contact</a>
+          <a href="#services">Services</a><a href="#methode">Comment ça marche</a><a href={facebook} target="_blank" rel="noreferrer">Facebook</a><a href="#contact">Contact</a>
         </nav>
         <a className="navCta" href={whatsapp}>WhatsApp</a>
       </header>
@@ -37,6 +39,7 @@ export default function Home() {
           <div className="actions">
             <a className="primary" href={whatsapp}>Demander un diagnostic</a>
             <a className="secondary" href="tel:+2250777808051">Appeler le 07 77 80 80 51</a>
+            <a className="secondary" href={facebook} target="_blank" rel="noreferrer">Voir notre page Facebook</a>
           </div>
           <div className="trust"><span>✓ Contact direct</span><span>✓ Suivi de l’intervention</span><span>✓ Devis clair</span></div>
         </div>
@@ -66,7 +69,7 @@ export default function Home() {
 
       <section className="cta" id="contact"><div className="shell ctaInner"><div><p className="eyebrow light">Besoin d’aide maintenant ?</p><h2>Envoyez une photo de la panne et le modèle de votre machine.</h2><p>Réponse directe par WhatsApp ou téléphone selon disponibilité.</p></div><div className="actions"><a className="primary inverse" href={whatsapp}>Ouvrir WhatsApp</a><a className="secondary inverseBorder" href="tel:+2250777808051">07 77 80 80 51</a></div></div></section>
 
-      <footer className="shell footer"><div><b>RISO ASSIST PRO</b><p>Service technique indépendant spécialisé dans les équipements RISO.</p></div><div><b>Contact</b><p>Ebimpé, Côte d’Ivoire<br/><a href="tel:+2250777808051">+225 07 77 80 80 51</a><br/><a href="/confidentialite">Confidentialité</a></p></div><small>RISO est une marque appartenant à son propriétaire respectif. Ce service indépendant n’est pas présenté comme un service officiel du fabricant.</small></footer>
+      <footer className="shell footer"><div><b>RISO ASSIST PRO</b><p>Service technique indépendant spécialisé dans les équipements RISO.</p></div><div><b>Contact</b><p>Ebimpé, Côte d’Ivoire<br/><a href="tel:+2250777808051">+225 07 77 80 80 51</a><br/><a href={facebook} target="_blank" rel="noreferrer">Maintenancier Riso sur Facebook</a><br/><a href="/confidentialite">Confidentialité</a></p></div><small>RISO est une marque appartenant à son propriétaire respectif. Ce service indépendant n’est pas présenté comme un service officiel du fabricant.</small></footer>
       <a className="floating" href={whatsapp} aria-label="Contacter le technicien sur WhatsApp">WhatsApp</a>
     </main>
   );

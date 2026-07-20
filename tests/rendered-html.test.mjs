@@ -31,6 +31,7 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /Votre machine RISO en panne/);
   assert.match(html, /https:\/\/wa\.me\/2250777808051/);
   assert.match(html, /tel:\+2250777808051/);
+  assert.match(html, /facebook\.com\/people\/Maintenancier-Riso\/61581266351611/);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /property="og:image" content="https:\/\/riso-assist-pro\.ci\/og\.png"/);
   assert.doesNotMatch(html, /localhost|codex-preview|Building your site/);
