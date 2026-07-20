@@ -44,6 +44,7 @@ test("rend la politique de confidentialité", async () => {
   assert.match(html, /Politique de confidentialité/);
   assert.match(html, /Données collectées/);
   assert.match(html, /Vos droits/);
+  assert.match(html, /suppression définitive du compte/i);
   assert.match(html, /Supabase/);
   assert.match(html, /Firebase/);
 });
