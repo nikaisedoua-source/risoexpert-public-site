@@ -1,3 +1,5 @@
+import RequestForm from "./request-form";
+
 const whatsapp = "https://wa.me/2250777808051?text=Bonjour%2C%20j%E2%80%99ai%20besoin%20d%E2%80%99un%20d%C3%A9pannage%20RISO.%20Mod%C3%A8le%20%3A%20%E2%80%A6%20Probl%C3%A8me%20%3A%20%E2%80%A6%20Commune%20%3A%20%E2%80%A6";
 const facebook = "https://www.facebook.com/people/Maintenancier-Riso/61581266351611/";
 
@@ -26,7 +28,7 @@ export default function Home() {
       <header className="nav shell">
         <a className="brand" href="#accueil"><span>RA</span> RISO ASSIST PRO</a>
         <nav aria-label="Navigation principale">
-          <a href="#services">Services</a><a href="#methode">Comment ça marche</a><a href={facebook} target="_blank" rel="noreferrer">Facebook</a><a href="#contact">Contact</a>
+          <a href="#services">Services</a><a href="#demande">Demander un dépannage</a><a href="#application">Application</a><a href={facebook} target="_blank" rel="noreferrer">Facebook</a>
         </nav>
         <a className="navCta" href={whatsapp}>WhatsApp</a>
       </header>
@@ -61,6 +63,13 @@ export default function Home() {
         <div><p className="eyebrow light">Simple et transparent</p><h2>Trois étapes pour avancer</h2><p>Envoyez le modèle, le message d’erreur et une photo. Vous obtenez une première orientation avant le déplacement.</p></div>
         <ol><li><b>Expliquez la panne</b><span>WhatsApp, téléphone ou application.</span></li><li><b>Recevez le diagnostic et le devis</b><span>Coût et intervention présentés clairement.</span></li><li><b>Suivez la remise en service</b><span>Rendez-vous, statut et facture conservés.</span></li></ol>
       </div></section>
+
+      <section className="section shell requestSection" id="demande">
+        <div className="requestIntro"><p className="eyebrow">Demande en ligne</p><h2>Expliquez votre panne au technicien.</h2><p className="sectionIntro">Renseignez votre machine, votre localisation et les symptômes observés. Votre demande sera préparée dans WhatsApp pour un envoi immédiat et confidentiel.</p></div>
+        <RequestForm />
+      </section>
+
+      <section className="appDownload" id="application"><div className="shell appDownloadInner"><div><p className="eyebrow light">Application Android</p><h2>Gardez le suivi technique dans votre téléphone.</h2><p>Enregistrez vos machines, conservez l’historique des pannes et envoyez une demande au technicien, même lorsque le serveur est indisponible.</p></div><a className="primary inverse downloadButton" href="/api/android-apk">Télécharger l’application Android</a></div></section>
 
       <section className="section shell proof">
         <div><p className="eyebrow">Pourquoi RISO ASSIST PRO</p><h2>Le sérieux d’un suivi professionnel, la proximité d’un technicien direct.</h2></div>
