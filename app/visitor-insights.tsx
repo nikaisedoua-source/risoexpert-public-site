@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { geoMercator, geoPath } from "d3-geo";
+import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import world from "world-atlas/countries-110m.json";
 
@@ -61,9 +61,9 @@ export default function VisitorInsights() {
   }, []);
 
   const map = useMemo(() => {
-    const projection = geoMercator().center([-5.5, 7.5]).scale(1850).translate([300, 225]);
-    const path = geoPath(projection);
     const countries = feature(world as never, (world as never as { objects: { countries: never } }).objects.countries) as unknown as { features: Array<never> };
+    const projection = geoNaturalEarth1().fitExtent([[18, 18], [582, 432]], countries as never);
+    const path = geoPath(projection);
     return { projection, paths: countries.features.map((country, index) => ({ index, d: path(country) ?? "" })) };
   }, []);
 
