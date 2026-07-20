@@ -69,7 +69,7 @@ export default function Home() {
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebook} target="_blank" rel="noreferrer">Suivre RisoExpert sur Facebook →</a></div></div></section>
 
-      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href="/confidentialite">Confidentialité</a><a href="#application">Application Android</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
+      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a><a href="#application">Application Android</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
       <a className="floatingWhatsapp" href={whatsapp}>WhatsApp</a>
     </main>
   );

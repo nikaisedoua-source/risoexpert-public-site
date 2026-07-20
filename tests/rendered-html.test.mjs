@@ -36,8 +36,19 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /href="\/api\/android-apk"/);
   assert.match(html, /visites enregistrées/);
   assert.match(html, /href="\/confidentialite"/);
+  assert.match(html, /href="\/conditions"/);
   assert.match(html, /property="og:image" content="https:\/\/riso-assist-pro\.ci\/og\.png"/);
   assert.doesNotMatch(html, /localhost|codex-preview|Building your site/);
+});
+
+test("rend les conditions d’utilisation", async () => {
+  const response = await render("/conditions");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Conditions d’utilisation/);
+  assert.match(html, /Données et sécurité/);
+  assert.match(html, /droit de Côte d’Ivoire/);
+  assert.match(html, /ne vaut pas renonciation aux droits légaux/i);
 });
 
 test("rend la politique de confidentialité", async () => {
