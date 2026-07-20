@@ -66,7 +66,7 @@ export default function Home() {
 
       <section className="cta" id="contact"><div className="shell ctaInner"><div><p className="eyebrow light">Besoin d’aide maintenant ?</p><h2>Envoyez une photo de la panne et le modèle de votre machine.</h2><p>Réponse directe par WhatsApp ou téléphone selon disponibilité.</p></div><div className="actions"><a className="primary inverse" href={whatsapp}>Ouvrir WhatsApp</a><a className="secondary inverseBorder" href="tel:+2250777808051">07 77 80 80 51</a></div></div></section>
 
-      <footer className="shell footer"><div><b>RISO ASSIST PRO</b><p>Service technique indépendant spécialisé dans les équipements RISO.</p></div><div><b>Contact</b><p>Ebimpé, Côte d’Ivoire<br/><a href="tel:+2250777808051">+225 07 77 80 80 51</a></p></div><small>RISO est une marque appartenant à son propriétaire respectif. Ce service indépendant n’est pas présenté comme un service officiel du fabricant.</small></footer>
+      <footer className="shell footer"><div><b>RISO ASSIST PRO</b><p>Service technique indépendant spécialisé dans les équipements RISO.</p></div><div><b>Contact</b><p>Ebimpé, Côte d’Ivoire<br/><a href="tel:+2250777808051">+225 07 77 80 80 51</a><br/><a href="/confidentialite">Confidentialité</a></p></div><small>RISO est une marque appartenant à son propriétaire respectif. Ce service indépendant n’est pas présenté comme un service officiel du fabricant.</small></footer>
       <a className="floating" href={whatsapp} aria-label="Contacter le technicien sur WhatsApp">WhatsApp</a>
     </main>
   );
