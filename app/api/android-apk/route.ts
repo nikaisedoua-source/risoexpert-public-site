@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 
-const objectKey = "RISO-Assist-Pro-Android.apk";
+const objectKey = "RisoExpert-Android.apk";
 
 function bucket() {
   const value = (env as unknown as { APK_BUCKET?: R2Bucket }).APK_BUCKET;

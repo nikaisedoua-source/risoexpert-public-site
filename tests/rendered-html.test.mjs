@@ -27,13 +27,14 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
 
   const html = await response.text();
   assert.match(html, /<html lang="fr">/i);
-  assert.match(html, /Technicien RISO en Côte d’Ivoire/);
-  assert.match(html, /Votre machine RISO en panne/);
+  assert.match(html, /RisoExpert \| Technicien RISO en Côte d’Ivoire/);
+  assert.match(html, /L’assistance technique RISO/);
   assert.match(html, /https:\/\/wa\.me\/2250777808051/);
   assert.match(html, /tel:\+2250777808051/);
   assert.match(html, /facebook\.com\/people\/Maintenancier-Riso\/61581266351611/);
-  assert.match(html, /Expliquez votre panne au technicien/);
+  assert.match(html, /Expliquez votre problème maintenant/);
   assert.match(html, /href="\/api\/android-apk"/);
+  assert.match(html, /visites enregistrées/);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /property="og:image" content="https:\/\/riso-assist-pro\.ci\/og\.png"/);
   assert.doesNotMatch(html, /localhost|codex-preview|Building your site/);
