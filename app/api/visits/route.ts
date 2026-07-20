@@ -6,7 +6,7 @@ type CloudflareRequest = Request & {
 
 async function snapshot() {
   const rows = await env.DB.prepare(
-    "SELECT city, country, latitude, longitude, visits FROM visitor_locations ORDER BY visits DESC LIMIT 12",
+    "SELECT city, country, latitude, longitude, visits FROM visitor_locations ORDER BY visits DESC LIMIT 50",
   ).all();
   const total = await env.DB.prepare(
     "SELECT COALESCE(SUM(visits), 0) AS total FROM visitor_locations",

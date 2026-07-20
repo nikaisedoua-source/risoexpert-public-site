@@ -1,5 +1,6 @@
 import RequestForm from "./request-form";
 import VisitorInsights from "./visitor-insights";
+import { headers } from "next/headers";
 
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
@@ -12,13 +13,21 @@ const services = [
   ["Suivi professionnel", "Historique des machines, devis, rendez-vous et factures."],
 ];
 
-export default function Home() {
+export default async function Home() {
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  const origin = `${protocol}://${host}`;
   const schema = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": ["ProfessionalService", "LocalBusiness"],
     name: "RisoExpert",
     slogan: "L’expertise RISO, à portée de main",
     telephone: phone,
+    url: `${origin}/`,
+    image: `${origin}/og.png`,
+    priceRange: "Sur devis",
+    description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO à Abidjan et en Côte d’Ivoire.",
     areaServed: "Côte d’Ivoire",
     sameAs: [facebook],
     address: { "@type": "PostalAddress", addressLocality: "Ebimpé, Abidjan", addressCountry: "CI" },

@@ -63,3 +63,15 @@ test("rend la politique de confidentialité", async () => {
   assert.match(html, /Supabase/);
   assert.match(html, /Firebase/);
 });
+
+test("expose les fichiers de référencement", async () => {
+  const robots = await render("/robots.txt");
+  assert.equal(robots.status, 200);
+  assert.match(await robots.text(), /Sitemap: https:\/\/riso-assist-pro\.ci\/sitemap\.xml/);
+
+  const sitemap = await render("/sitemap.xml");
+  assert.equal(sitemap.status, 200);
+  const xml = await sitemap.text();
+  assert.match(xml, /<loc>https:\/\/riso-assist-pro\.ci\/<\/loc>/);
+  assert.match(xml, /<loc>https:\/\/riso-assist-pro\.ci\/conditions<\/loc>/);
+});

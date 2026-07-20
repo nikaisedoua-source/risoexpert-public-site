@@ -51,7 +51,7 @@ export default function VisitorInsights() {
           </div>
           <div className="cityChart" aria-label="Nombre de visites par ville">
             <h3>Visites par ville</h3>
-            {locations.length === 0 ? <p className="emptyData">Les premières visites apparaîtront ici.</p> : locations.slice(0, 7).map((item) => (
+            {locations.length === 0 ? <p className="emptyData">Les premières visites réelles apparaîtront ici.</p> : locations.slice(0, 10).map((item) => (
               <div className="cityRow" key={`${item.country}-${item.city}`}>
                 <div><span>{item.city}</span><strong>{item.visits}</strong></div>
                 <div className="bar"><i style={{ width: `${Math.max(8, item.visits / max * 100)}%` }} /></div>
