@@ -12,7 +12,26 @@ export default function VisitorInsights() {
   const [data, setData] = useState<VisitData | null>(null);
 
   useEffect(() => {
-    fetch("/api/visits", { method: "POST" })
+    const today = new Date().toISOString().slice(0, 10);
+    const locate = localStorage.getItem("risoexpert_geo_day") === today
+      ? Promise.resolve({})
+      : fetch("https://ipwho.is/?fields=success,city,country_code,latitude,longitude&lang=fr")
+          .then((response) => response.ok ? response.json() : {})
+          .then((location) => {
+            localStorage.setItem("risoexpert_geo_day", today);
+            return location?.success ? {
+              city: location.city,
+              country: location.country_code,
+              latitude: location.latitude,
+              longitude: location.longitude,
+            } : {};
+          })
+          .catch(() => ({}));
+    locate.then((location) => fetch("/api/visits", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(location),
+    }))
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then(setData)
       .catch(() => setData({ total: 0, locations: [] }));

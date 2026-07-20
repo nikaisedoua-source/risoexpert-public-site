@@ -23,10 +23,16 @@ export async function GET() {
 export async function POST(request: CloudflareRequest) {
   const alreadyCounted = request.headers.get("cookie")?.includes("risoexpert_visit=");
   if (!alreadyCounted) {
-    const city = request.cf?.city?.trim() || "Localisation inconnue";
-    const country = request.cf?.country?.trim() || "—";
-    const latitude = Number.parseFloat(request.cf?.latitude ?? "");
-    const longitude = Number.parseFloat(request.cf?.longitude ?? "");
+    const supplied = await request.json().catch(() => ({})) as Record<string, unknown>;
+    const safeText = (value: unknown, fallback: string) => typeof value === "string" && value.trim().length > 0 && value.trim().length <= 100 ? value.trim() : fallback;
+    const city = request.cf?.city?.trim() || safeText(supplied.city, "Localisation inconnue");
+    const country = request.cf?.country?.trim() || safeText(supplied.country, "—");
+    const suppliedLatitude = typeof supplied.latitude === "number" ? supplied.latitude : Number.NaN;
+    const suppliedLongitude = typeof supplied.longitude === "number" ? supplied.longitude : Number.NaN;
+    const cfLatitude = Number.parseFloat(request.cf?.latitude ?? "");
+    const cfLongitude = Number.parseFloat(request.cf?.longitude ?? "");
+    const latitude = Number.isFinite(cfLatitude) ? cfLatitude : suppliedLatitude;
+    const longitude = Number.isFinite(cfLongitude) ? cfLongitude : suppliedLongitude;
     const cityKey = `${country}:${city}`.toLocaleLowerCase("fr");
     await env.DB.prepare(
       `INSERT INTO visitor_locations(city_key, city, country, latitude, longitude, visits, updated_at)
@@ -41,8 +47,8 @@ export async function POST(request: CloudflareRequest) {
         cityKey,
         city,
         country,
-        Number.isFinite(latitude) ? latitude : null,
-        Number.isFinite(longitude) ? longitude : null,
+        Number.isFinite(latitude) && latitude >= -90 && latitude <= 90 ? latitude : null,
+        Number.isFinite(longitude) && longitude >= -180 && longitude <= 180 ? longitude : null,
       )
       .run();
   }
