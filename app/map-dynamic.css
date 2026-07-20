@@ -1,0 +1,31 @@
+.mapPoint .pointPulse {
+  fill: #f5b71955;
+  stroke: #e5a300;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 2.4s ease-out infinite;
+}
+
+.mapPoint .pointCore { fill: #0b3c94; stroke: #fff; stroke-width: 1.5; }
+
+.mapLabel {
+  fill: #0a1830;
+  font: 800 12px var(--font-sans), Arial, sans-serif;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.cityFlag { margin-right: 8px; font-size: 19px; }
+
+@keyframes map-pulse {
+  0% { opacity: .9; transform: scale(.82); }
+  70%, 100% { opacity: .2; transform: scale(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapPoint .pointPulse { animation: none; }
+}

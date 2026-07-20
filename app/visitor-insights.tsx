@@ -8,10 +8,21 @@ import world from "world-atlas/countries-110m.json";
 type Location = { city: string; country: string; latitude: number | null; longitude: number | null; visits: number };
 type VisitData = { total: number; locations: Location[] };
 
+function countryFlag(code: string) {
+  const normalized = code.trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(normalized)) return "🌍";
+  return String.fromCodePoint(...[...normalized].map((letter) => 127397 + letter.charCodeAt(0)));
+}
+
 export default function VisitorInsights() {
   const [data, setData] = useState<VisitData | null>(null);
 
   useEffect(() => {
+    let active = true;
+    const refresh = () => fetch("/api/visits")
+      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then((snapshot) => { if (active) setData(snapshot); })
+      .catch(() => undefined);
     const today = new Date().toISOString().slice(0, 10);
     const locate = localStorage.getItem("risoexpert_geo_day") === today
       ? Promise.resolve({})
@@ -33,8 +44,10 @@ export default function VisitorInsights() {
       body: JSON.stringify(location),
     }))
       .then((response) => response.ok ? response.json() : Promise.reject())
-      .then(setData)
+      .then((snapshot) => { if (active) setData(snapshot); })
       .catch(() => setData({ total: 0, locations: [] }));
+    const timer = window.setInterval(refresh, 60_000);
+    return () => { active = false; window.clearInterval(timer); };
   }, []);
 
   const map = useMemo(() => {
@@ -63,7 +76,13 @@ export default function VisitorInsights() {
                 const point = map.projection([item.longitude, item.latitude]);
                 if (!point) return null;
                 const radius = 6 + Math.sqrt(item.visits / max) * 13;
-                return <g key={`${item.country}-${item.city}`} className="mapPoint" transform={`translate(${point[0]} ${point[1]})`}><circle r={radius} /><circle r="3" /><title>{item.city} : {item.visits} visite{item.visits > 1 ? "s" : ""}</title></g>;
+                const placeLabelLeft = point[0] > 475;
+                return <g key={`${item.country}-${item.city}`} className="mapPoint" transform={`translate(${point[0]} ${point[1]})`}>
+                  <circle className="pointPulse" r={radius} />
+                  <circle className="pointCore" r="4" />
+                  <text className="mapLabel" x={placeLabelLeft ? -radius - 6 : radius + 6} y="4" textAnchor={placeLabelLeft ? "end" : "start"}>{countryFlag(item.country)} {item.city}</text>
+                  <title>{countryFlag(item.country)} {item.city}, {item.country} : {item.visits} visite{item.visits > 1 ? "s" : ""}</title>
+                </g>;
               })}
             </svg>
             <span className="mapCaption">Origine approximative par ville — aucune adresse IP conservée</span>
@@ -72,7 +91,7 @@ export default function VisitorInsights() {
             <h3>Visites par ville</h3>
             {locations.length === 0 ? <p className="emptyData">Les premières visites réelles apparaîtront ici.</p> : locations.slice(0, 10).map((item) => (
               <div className="cityRow" key={`${item.country}-${item.city}`}>
-                <div><span>{item.city}</span><strong>{item.visits}</strong></div>
+                <div><span><b className="cityFlag" aria-hidden="true">{countryFlag(item.country)}</b>{item.city}</span><strong>{item.visits}</strong></div>
                 <div className="bar"><i style={{ width: `${Math.max(8, item.visits / max * 100)}%` }} /></div>
               </div>
             ))}
