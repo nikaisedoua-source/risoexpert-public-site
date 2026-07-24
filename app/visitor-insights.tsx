@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import world from "world-atlas/countries-110m.json";
@@ -18,6 +18,16 @@ export default function VisitorInsights() {
   const [data, setData] = useState<VisitData | null>(null);
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
+  const [livePosition, setLivePosition] = useState<{ latitude: number; longitude: number; accuracy: number } | null>(null);
+  const watchId = useRef<number | null>(null);
+
+  async function recordLocation(location: { city: string; country: string; latitude: number; longitude: number }) {
+    const response = await fetch("/api/visits", {
+      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(location),
+    });
+    if (!response.ok) throw new Error("record-failed");
+    setData(await response.json());
+  }
 
   async function locateAndRecord(force = false) {
     setLocating(true);
@@ -34,19 +44,35 @@ export default function VisitorInsights() {
         location = { city: geo.city, country: geo.country_code, latitude: geo.latitude, longitude: geo.longitude };
         localStorage.setItem("risoexpert_geo_v2", JSON.stringify({ day: today, location }));
       }
-      const response = await fetch("/api/visits", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(location),
-      });
-      if (!response.ok) throw new Error("record-failed");
-      setData(await response.json());
+      await recordLocation(location);
       setLocationMessage(`${countryFlag(location.country)} ${location.city} a été localisée.`);
     } catch {
       setLocationMessage("La ville n’a pas pu être détectée. Réessayez dans quelques instants.");
     } finally {
       setLocating(false);
     }
+  }
+
+  function toggleLivePosition() {
+    if (watchId.current !== null) {
+      navigator.geolocation.clearWatch(watchId.current);
+      watchId.current = null;
+      setLocationMessage("Suivi GPS arrêté.");
+      return;
+    }
+    if (!navigator.geolocation) return setLocationMessage("Le GPS n’est pas disponible sur cet appareil.");
+    setLocating(true);
+    setLocationMessage("Recherche du signal GPS…");
+    watchId.current = navigator.geolocation.watchPosition(
+      ({ coords }) => {
+        setLivePosition({ latitude: coords.latitude, longitude: coords.longitude, accuracy: coords.accuracy });
+        setLocating(false);
+        setLocationMessage(`Position actualisée en direct — précision ±${Math.round(coords.accuracy)} m.`);
+        recordLocation({ city: "Position GPS", country: "CI", latitude: coords.latitude, longitude: coords.longitude }).catch(() => undefined);
+      },
+      () => { setLocating(false); setLocationMessage("Autorisez la localisation précise dans votre navigateur, puis réessayez."); },
+      { enableHighAccuracy: true, maximumAge: 3000, timeout: 20000 },
+    );
   }
 
   useEffect(() => {
@@ -57,7 +83,10 @@ export default function VisitorInsights() {
       .catch(() => undefined);
     locateAndRecord().catch(() => undefined);
     const timer = window.setInterval(refresh, 60_000);
-    return () => { active = false; window.clearInterval(timer); };
+    return () => {
+      active = false; window.clearInterval(timer);
+      if (watchId.current !== null) navigator.geolocation.clearWatch(watchId.current);
+    };
   }, []);
 
   const map = useMemo(() => {
@@ -94,10 +123,19 @@ export default function VisitorInsights() {
                   <title>{countryFlag(item.country)} {item.city}, {item.country} : {item.visits} visite{item.visits > 1 ? "s" : ""}</title>
                 </g>;
               })}
+              {livePosition && (() => {
+                const point = map.projection([livePosition.longitude, livePosition.latitude]);
+                return point ? <g className="livePoint" transform={`translate(${point[0]} ${point[1]})`}>
+                  <circle className="liveAccuracy" r={Math.max(10, Math.min(35, livePosition.accuracy / 80))} />
+                  <circle className="liveCore" r="6" />
+                  <text className="mapLabel" x="14" y="4">Vous êtes ici</text>
+                </g> : null;
+              })()}
             </svg>
-            <span className="mapCaption">Origine approximative par ville — aucune adresse IP conservée</span>
+            <span className="mapCaption">Le point bleu suit votre GPS avec votre autorisation. Les statistiques publiques restent regroupées par ville.</span>
             <div className="locationAction">
-              <button type="button" onClick={() => locateAndRecord(true)} disabled={locating}>{locating ? "Détection en cours…" : "Détecter ma ville"}</button>
+              <button type="button" onClick={toggleLivePosition}>{watchId.current !== null ? "Arrêter le suivi GPS" : locating ? "Détection en cours…" : "Activer ma position en direct"}</button>
+              <button className="secondaryLocation" type="button" onClick={() => locateAndRecord(true)} disabled={locating}>Détecter ma ville</button>
               {locationMessage && <span role="status">{locationMessage}</span>}
             </div>
           </div>

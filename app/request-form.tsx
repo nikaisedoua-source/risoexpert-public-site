@@ -3,30 +3,47 @@
 import { FormEvent, useState } from "react";
 
 export default function RequestForm() {
-  const [sent, setSent] = useState(false);
+  const [reference, setReference] = useState("");
+  const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
+  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [geoStatus, setGeoStatus] = useState("");
 
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const consentedAt = new Date().toISOString();
-    const lines = [
-      "Bonjour, je souhaite demander un dépannage RISO.",
-      `Nom : ${data.get("name")}`,
-      `Téléphone : ${data.get("phone")}`,
-      `Ville / commune : ${data.get("location")}`,
-      `Machine / modèle : ${data.get("machine")}`,
-      `Urgence : ${data.get("urgency")}`,
-      `Problème : ${data.get("problem")}`,
-      `Message d’erreur : ${data.get("error") || "Non renseigné"}`,
-      "",
-      `Consentement : Conditions d’utilisation et Politique de confidentialité acceptées (version 20/07/2026, ${consentedAt}).`,
-    ];
-    setSent(true);
-    window.open(
-      `https://wa.me/2250777808051?text=${encodeURIComponent(lines.join("\n"))}`,
-      "_blank",
-      "noopener,noreferrer",
+  function locate() {
+    if (!navigator.geolocation) return setGeoStatus("GPS non disponible sur cet appareil.");
+    setGeoStatus("Localisation GPS en cours…");
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setCoordinates({ latitude: coords.latitude, longitude: coords.longitude });
+        setGeoStatus(`Position GPS ajoutée (précision ±${Math.round(coords.accuracy)} m).`);
+      },
+      () => setGeoStatus("Position non autorisée. Vous pouvez saisir la commune manuellement."),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
     );
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSending(true);
+    setError("");
+    setReference("");
+    const data = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(data.entries());
+    try {
+      const response = await fetch("/api/requests", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...payload, ...coordinates, legalConsent: data.get("legalConsent") === "on" }),
+      });
+      const result = await response.json() as { id?: string; error?: string };
+      if (!response.ok || !result.id) throw new Error(result.error || "Enregistrement impossible.");
+      setReference(result.id);
+      event.currentTarget.reset();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Une erreur est survenue. Réessayez.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -39,14 +56,16 @@ export default function RequestForm() {
         <label>Urgence<select name="urgency" defaultValue="Normale"><option>Normale</option><option>Élevée</option><option>Critique — production arrêtée</option></select></label>
         <label>Message d’erreur<input name="error" placeholder="Code ou message affiché" /></label>
       </div>
+      <div className="geoField"><button type="button" onClick={locate}>Utiliser ma position GPS</button>{geoStatus && <span role="status">{geoStatus}</span>}</div>
       <label>Expliquez précisément le problème<textarea name="problem" rows={5} minLength={10} required placeholder="Depuis quand, bruit observé, qualité d’impression, actions déjà tentées…" /></label>
-      <p className="formHelp">Après validation, WhatsApp s’ouvre avec votre demande complète. Vous pourrez y joindre des photos ou une vidéo de la panne.</p>
+      <p className="formHelp">La demande est enregistrée directement et transmise au technicien. WhatsApp n’est pas nécessaire.</p>
       <label className="consentField">
         <input name="legalConsent" type="checkbox" required />
         <span>J’ai lu et j’accepte les <a href="/conditions" target="_blank">Conditions d’utilisation</a> et la <a href="/confidentialite" target="_blank">Politique de confidentialité</a>. Je consens au traitement de mes informations pour gérer ma demande de dépannage.</span>
       </label>
-      <button className="primary formSubmit" type="submit">Envoyer ma demande au technicien</button>
-      {sent && <p className="formSuccess" role="status">Votre demande est prête dans WhatsApp. Appuyez sur Envoyer pour la transmettre.</p>}
+      <button className="primary formSubmit" type="submit" disabled={sending}>{sending ? "Enregistrement…" : "Enregistrer ma demande"}</button>
+      {reference && <p className="formSuccess" role="status">Demande enregistrée. Votre numéro de dossier : <strong>{reference}</strong>.</p>}
+      {error && <p className="formError" role="alert">{error}</p>}
     </form>
   );
 }

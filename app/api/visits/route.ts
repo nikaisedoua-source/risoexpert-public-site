@@ -32,8 +32,8 @@ export async function POST(request: CloudflareRequest) {
   const suppliedLongitude = typeof supplied.longitude === "number" ? supplied.longitude : Number.NaN;
   const cfLatitude = Number.parseFloat(request.cf?.latitude ?? "");
   const cfLongitude = Number.parseFloat(request.cf?.longitude ?? "");
-  const latitude = Number.isFinite(cfLatitude) ? cfLatitude : suppliedLatitude;
-  const longitude = Number.isFinite(cfLongitude) ? cfLongitude : suppliedLongitude;
+  const latitude = Number.isFinite(suppliedLatitude) ? suppliedLatitude : cfLatitude;
+  const longitude = Number.isFinite(suppliedLongitude) ? suppliedLongitude : cfLongitude;
   const validLatitude = Number.isFinite(latitude) && latitude >= -90 && latitude <= 90;
   const validLongitude = Number.isFinite(longitude) && longitude >= -180 && longitude <= 180;
   const hasRealLocation = city !== "Localisation inconnue" && country !== "—" && validLatitude && validLongitude;

@@ -5,6 +5,7 @@ import "./globals.css";
 import "./legal-consent.css";
 import "./map-dynamic.css";
 import "./machine-showcase.css";
+import "./polish.css";
 
 const sans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const mono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
@@ -16,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = `${protocol}://${host}/og.png`;
   return {
     title: "RisoExpert | Technicien RISO en Côte d’Ivoire",
-    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire. Contact direct par WhatsApp au 07 77 80 80 51.",
+    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire. Demande en ligne enregistrée et suivie par un technicien.",
     keywords: ["technicien RISO Côte d’Ivoire", "dépannage duplicopieur", "maintenance RISO", "réparation RISO Abidjan"],
     alternates: { canonical: `${protocol}://${host}/` },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },

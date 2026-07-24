@@ -71,7 +71,7 @@ export default async function Home() {
       <section className="process"><div className="shell processGrid"><div><p className="kicker gold">Simple et transparent</p><h2>Trois étapes. Une machine remise en service.</h2></div><ol><li><b>01</b><div><strong>Décrivez la panne</strong><span>Modèle, symptômes, message d’erreur et localisation.</span></div></li><li><b>02</b><div><strong>Recevez une première orientation</strong><span>Diagnostic à distance et préparation du déplacement.</span></div></li><li><b>03</b><div><strong>Suivez l’intervention</strong><span>Rendez-vous, devis et historique disponibles.</span></div></li></ol></div></section>
 
       <section className="section requestSection shell" id="demande">
-        <div className="requestIntro"><p className="kicker">Demande en ligne</p><h2>Expliquez votre problème maintenant.</h2><p>Votre demande complète s’ouvre dans WhatsApp. Ajoutez ensuite les photos ou la vidéo de la panne avant l’envoi.</p><div className="directContact"><span>Besoin d’une réponse immédiate ?</span><a href={`tel:${phone}`}>07 77 80 80 51</a></div></div>
+        <div className="requestIntro"><p className="kicker">Demande en ligne</p><h2>Expliquez votre problème maintenant.</h2><p>Votre demande est enregistrée de façon sécurisée avec un numéro de dossier. Le technicien peut ensuite assurer un vrai suivi.</p><div className="directContact"><span>Besoin d’une réponse immédiate ?</span><a href={`tel:${phone}`}>07 77 80 80 51</a></div></div>
         <RequestForm />
       </section>
 
