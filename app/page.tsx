@@ -1,6 +1,7 @@
 import RequestForm from "./request-form";
 import VisitorInsights from "./visitor-insights";
 import GoogleSignIn from "./google-sign-in";
+import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import { headers } from "next/headers";
 
@@ -32,6 +33,8 @@ export default async function Home() {
     description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO à Abidjan et en Côte d’Ivoire.",
     areaServed: "Côte d’Ivoire",
     sameAs: [facebook],
+    knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
+    serviceType: ["Diagnostic RISO", "Dépannage de duplicopieurs", "Maintenance préventive", "Réparation RISO"],
     address: { "@type": "PostalAddress", addressLocality: "Ebimpé, Abidjan", addressCountry: "CI" },
   };
 
@@ -79,6 +82,7 @@ export default async function Home() {
       <section className="download" id="application"><div className="shell downloadGrid"><div className="phoneMock"><div className="phoneTop">RisoExpert <i/></div><h3>Bonjour !</h3><p>Comment pouvons-nous vous aider aujourd’hui ?</p><div className="mockCard"><b>Déclarer une panne</b><span>Décrivez votre problème en quelques étapes simples.</span><strong>Commencer →</strong></div><div className="mockTiles"><span>Mes machines</span><span>Mes demandes</span></div></div><div><p className="kicker gold">Application Android</p><h2>Votre assistance vous accompagne partout.</h2><p>Enregistrez vos équipements, gardez l’historique de vos demandes et transmettez une panne directement au technicien.</p><a className="button goldButton" href="/api/android-apk">Télécharger l’APK Android <small>61,9 Mo</small></a><p className="installNote">Téléchargement direct sécurisé — Android uniquement.</p></div></div></section>
 
       <VisitorInsights />
+      <div className="shell"><SocialShare /></div>
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebook} target="_blank" rel="noreferrer">Suivre RisoExpert sur Facebook →</a></div></div></section>
 

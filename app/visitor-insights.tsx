@@ -20,6 +20,8 @@ export default function VisitorInsights() {
   const [locationMessage, setLocationMessage] = useState("");
   const [livePosition, setLivePosition] = useState<{ latitude: number; longitude: number; accuracy: number } | null>(null);
   const watchId = useRef<number | null>(null);
+  const resolvedPlace = useRef<{ city: string; country: string } | null>(null);
+  const resolvingPlace = useRef(false);
 
   async function recordLocation(location: { city: string; country: string; latitude: number; longitude: number }) {
     const response = await fetch("/api/visits", {
@@ -64,11 +66,25 @@ export default function VisitorInsights() {
     setLocating(true);
     setLocationMessage("Recherche du signal GPS…");
     watchId.current = navigator.geolocation.watchPosition(
-      ({ coords }) => {
+      async ({ coords }) => {
         setLivePosition({ latitude: coords.latitude, longitude: coords.longitude, accuracy: coords.accuracy });
         setLocating(false);
-        setLocationMessage(`Position actualisée en direct — précision ±${Math.round(coords.accuracy)} m.`);
-        recordLocation({ city: "Position GPS", country: "CI", latitude: coords.latitude, longitude: coords.longitude }).catch(() => undefined);
+        if (!resolvedPlace.current && !resolvingPlace.current) {
+          resolvingPlace.current = true;
+          const response = await fetch("/api/reverse-geocode", {
+            method: "POST", headers: { "content-type": "application/json" },
+            body: JSON.stringify({ latitude: coords.latitude, longitude: coords.longitude }),
+          }).catch(() => null);
+          const place = response?.ok ? await response.json() as { city?: string; country?: string } : null;
+          if (place?.city) resolvedPlace.current = { city: place.city, country: place.country || "CI" };
+          resolvingPlace.current = false;
+        }
+        const place = resolvedPlace.current;
+        setLocationMessage(`${place?.city ? `${place.city} — ` : ""}position GPS en direct, précision ±${Math.round(coords.accuracy)} m.`);
+        recordLocation({
+          city: place?.city || "Position GPS", country: place?.country || "CI",
+          latitude: coords.latitude, longitude: coords.longitude,
+        }).catch(() => undefined);
       },
       () => { setLocating(false); setLocationMessage("Autorisez la localisation précise dans votre navigateur, puis réessayez."); },
       { enableHighAccuracy: true, maximumAge: 3000, timeout: 20000 },
@@ -132,7 +148,7 @@ export default function VisitorInsights() {
                 </g> : null;
               })()}
             </svg>
-            <span className="mapCaption">Le point bleu suit votre GPS avec votre autorisation. Les statistiques publiques restent regroupées par ville.</span>
+            <span className="mapCaption">Le point bleu suit votre GPS avec votre autorisation. Ville fournie par © OpenStreetMap ; statistiques publiques regroupées par ville.</span>
             <div className="locationAction">
               <button type="button" onClick={toggleLivePosition}>{watchId.current !== null ? "Arrêter le suivi GPS" : locating ? "Détection en cours…" : "Activer ma position en direct"}</button>
               <button className="secondaryLocation" type="button" onClick={() => locateAndRecord(true)} disabled={locating}>Détecter ma ville</button>

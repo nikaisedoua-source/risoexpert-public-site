@@ -26,8 +26,8 @@ export async function POST(request: CloudflareRequest) {
   const alreadyLocated = cookies.includes("risoexpert_geo=");
   const supplied = await request.json().catch(() => ({})) as Record<string, unknown>;
   const safeText = (value: unknown, fallback: string) => typeof value === "string" && value.trim().length > 0 && value.trim().length <= 100 ? value.trim() : fallback;
-  const city = request.cf?.city?.trim() || safeText(supplied.city, "Localisation inconnue");
-  const country = request.cf?.country?.trim() || safeText(supplied.country, "—");
+  const suppliedCity = safeText(supplied.city, "");
+  const suppliedCountry = safeText(supplied.country, "");
   const suppliedLatitude = typeof supplied.latitude === "number" ? supplied.latitude : Number.NaN;
   const suppliedLongitude = typeof supplied.longitude === "number" ? supplied.longitude : Number.NaN;
   const cfLatitude = Number.parseFloat(request.cf?.latitude ?? "");
@@ -36,6 +36,9 @@ export async function POST(request: CloudflareRequest) {
   const longitude = Number.isFinite(suppliedLongitude) ? suppliedLongitude : cfLongitude;
   const validLatitude = Number.isFinite(latitude) && latitude >= -90 && latitude <= 90;
   const validLongitude = Number.isFinite(longitude) && longitude >= -180 && longitude <= 180;
+  const hasGpsPlace = validLatitude && validLongitude && suppliedCity && suppliedCity !== "Position GPS";
+  const city = hasGpsPlace ? suppliedCity : request.cf?.city?.trim() || suppliedCity || "Localisation inconnue";
+  const country = hasGpsPlace ? suppliedCountry || "CI" : request.cf?.country?.trim() || suppliedCountry || "—";
   const hasRealLocation = city !== "Localisation inconnue" && country !== "—" && validLatitude && validLongitude;
   const cityKey = `${country}:${city}`.toLocaleLowerCase("fr");
   const upsertLocation = () => env.DB.prepare(
