@@ -9,5 +9,9 @@ h2 { font-size: clamp(31px, 3.8vw, 48px); }
 .geoField { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .geoField button { border: 1px solid #b8c8df; border-radius: 10px; background: #edf3fb; color: var(--blue); padding: 10px 13px; font: 700 13px var(--font-sans); cursor: pointer; }
 .geoField span { color: var(--muted); font-size: 13px; }
+.googleSignIn { min-width: 190px; min-height: 40px; display: flex; justify-content: flex-end; }
+.userChip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 5px 12px 5px 5px; display: flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 700; cursor: pointer; }
+.userChip img { width: 30px; height: 30px; border-radius: 50%; }
 @media (max-width: 950px) { .insightsGrid { grid-template-columns: 1fr; } }
 @media (max-width: 580px) { h1 { font-size: 42px; } .mapPanel svg { height: 460px; } }
+@media (max-width: 720px) { .googleSignIn, .userChip { display: none; } }

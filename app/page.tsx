@@ -1,5 +1,6 @@
 import RequestForm from "./request-form";
 import VisitorInsights from "./visitor-insights";
+import GoogleSignIn from "./google-sign-in";
 import MachineShowcase from "./machine-showcase";
 import { headers } from "next/headers";
 
@@ -41,7 +42,7 @@ export default async function Home() {
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
           <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#demande">Dépannage</a><a href="#application">Application</a><a href="#visiteurs">Visiteurs</a></nav>
-          <a className="navAction" href={whatsapp}>WhatsApp</a>
+          <GoogleSignIn />
         </div>
       </header>
 
