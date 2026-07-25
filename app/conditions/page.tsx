@@ -1,4 +1,5 @@
 import "../confidentialite/legal.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "Conditions d’utilisation | RisoExpert",
@@ -8,7 +9,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <main className="legal shell">
-      <a className="legalBack" href="/">← Retour à l’accueil</a>
+      <Link className="legalBack" href="/">← Retour à l’accueil</Link>
       <p className="eyebrow">Cadre du service</p>
       <h1>Conditions d’utilisation</h1>
       <p className="lead">Version du 20 juillet 2026.</p>

@@ -18,6 +18,7 @@ export default function VisitorInsights() {
   const [data, setData] = useState<VisitData | null>(null);
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
+  const [isWatching, setIsWatching] = useState(false);
   const [livePosition, setLivePosition] = useState<{ latitude: number; longitude: number; accuracy: number } | null>(null);
   const watchId = useRef<number | null>(null);
   const resolvedPlace = useRef<{ city: string; country: string } | null>(null);
@@ -59,6 +60,7 @@ export default function VisitorInsights() {
     if (watchId.current !== null) {
       navigator.geolocation.clearWatch(watchId.current);
       watchId.current = null;
+      setIsWatching(false);
       setLocationMessage("Suivi GPS arrêté.");
       return;
     }
@@ -89,6 +91,7 @@ export default function VisitorInsights() {
       () => { setLocating(false); setLocationMessage("Autorisez la localisation précise dans votre navigateur, puis réessayez."); },
       { enableHighAccuracy: true, maximumAge: 3000, timeout: 20000 },
     );
+    setIsWatching(true);
   }
 
   useEffect(() => {
@@ -97,7 +100,6 @@ export default function VisitorInsights() {
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then((snapshot) => { if (active) setData(snapshot); })
       .catch(() => undefined);
-    locateAndRecord().catch(() => undefined);
     const timer = window.setInterval(refresh, 60_000);
     return () => {
       active = false; window.clearInterval(timer);
@@ -150,7 +152,7 @@ export default function VisitorInsights() {
             </svg>
             <span className="mapCaption">Le point bleu suit votre GPS avec votre autorisation. Ville fournie par © OpenStreetMap ; statistiques publiques regroupées par ville.</span>
             <div className="locationAction">
-              <button type="button" onClick={toggleLivePosition}>{watchId.current !== null ? "Arrêter le suivi GPS" : locating ? "Détection en cours…" : "Activer ma position en direct"}</button>
+              <button type="button" onClick={toggleLivePosition}>{isWatching ? "Arrêter le suivi GPS" : locating ? "Détection en cours…" : "Activer ma position en direct"}</button>
               <button className="secondaryLocation" type="button" onClick={() => locateAndRecord(true)} disabled={locating}>Détecter ma ville</button>
               {locationMessage && <span role="status">{locationMessage}</span>}
             </div>

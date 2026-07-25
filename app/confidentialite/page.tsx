@@ -1,4 +1,5 @@
 import "./legal.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "Politique de confidentialité | RisoExpert",
@@ -8,7 +9,7 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <main className="legal shell">
-      <a className="legalBack" href="/">← Retour à l’accueil</a>
+      <Link className="legalBack" href="/">← Retour à l’accueil</Link>
       <p className="eyebrow">Vos données</p>
       <h1>Politique de confidentialité</h1>
       <p className="lead">Dernière mise à jour : 20 juillet 2026.</p>
