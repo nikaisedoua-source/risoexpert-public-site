@@ -4,6 +4,7 @@ import GoogleSignIn from "./google-sign-in";
 import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import { headers } from "next/headers";
+import Image from "next/image";
 
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
@@ -59,7 +60,7 @@ export default async function Home() {
             <div className="heroActions"><a className="button goldButton" href="#demande">Déclarer une panne</a><a className="button ghostButton" href={`/api/android-apk`}>Télécharger l’application</a></div>
             <div className="heroTrust"><span>Intervention rapide</span><span>Devis clair</span><span>Suivi personnalisé</span></div>
           </div>
-          <div className="heroPortrait" aria-label="Technicien RisoExpert"><div className="portraitHalo"/><img src="/risoexpert-avatar-sheet.png" alt="Avatar du technicien RisoExpert en tenue professionnelle"/><div className="responseBadge"><i/> Disponible pour un diagnostic<small>Contact direct : 07 77 80 80 51</small></div></div>
+          <div className="heroPortrait" aria-label="Technicien RisoExpert"><div className="portraitHalo"/><Image src="/risoexpert-avatar-sheet.png" alt="Avatar du technicien RisoExpert en tenue professionnelle" width={1080} height={720} priority sizes="(max-width: 950px) 100vw, 50vw"/><div className="responseBadge"><i/> Disponible pour un diagnostic<small>Contact direct : 07 77 80 80 51</small></div></div>
         </div>
       </section>
 

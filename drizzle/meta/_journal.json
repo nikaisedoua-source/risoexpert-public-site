@@ -22,6 +22,13 @@
       "when": 1784892568646,
       "tag": "0002_rich_purifiers",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1784939013688,
+      "tag": "0003_first_veda",
+      "breakpoints": true
     }
   ]
 }

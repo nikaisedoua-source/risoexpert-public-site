@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const machines = [
   { model: "RISOGRAPH SF9350 EII", type: "Duplicopieur monochrome A3", image: "/machines/sf9350.jpg", alt: "Duplicopieur RISO SF9350 EII", facts: ["150 pages/min", "600 × 600 dpi", "Bac 1 000 feuilles"], text: "Idéal pour les écoles, administrations, associations et ateliers qui impriment de gros volumes. Diagnostic des bourrages, défauts d’impression, tambour, master, alimentation papier et capteurs." },
@@ -24,7 +25,7 @@ export default function MachineShowcase() {
       <div className="shell">
         <div className="machineHeading"><div><p className="kicker gold">Machines prises en charge</p><h2 id="machines-title">Une expertise adaptée à chaque technologie RISO.</h2></div><p>Découvrez les principales familles de machines accompagnées par RisoExpert. Les modèles apparentés peuvent également être diagnostiqués.</p></div>
         <div className="machineStage" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-          <div className="machineVisual" key={`visual-${active}`}><span className="machineOrbit" aria-hidden="true"/><span className="machineScan" aria-hidden="true"/><img src={machine.image} alt={machine.alt}/><span className="machineCount">{String(active + 1).padStart(2, "0")} / {String(machines.length).padStart(2, "0")}</span></div>
+          <div className="machineVisual" key={`visual-${active}`}><span className="machineOrbit" aria-hidden="true"/><span className="machineScan" aria-hidden="true"/><Image src={machine.image} alt={machine.alt} width={900} height={650} sizes="(max-width: 950px) 100vw, 55vw"/><span className="machineCount">{String(active + 1).padStart(2, "0")} / {String(machines.length).padStart(2, "0")}</span></div>
           <article className="machineCopy" key={`copy-${active}`} aria-live="polite"><p>{machine.type}</p><h3>{machine.model}</h3><div className="machineFacts">{machine.facts.map((fact) => <span key={fact}>{fact}</span>)}</div><p className="machineDescription">{machine.text}</p><a className="machineCta" href="#demande">Demander une intervention sur ce modèle <b>→</b></a></article>
           <button className="machineArrow previous" type="button" onClick={() => select(active - 1)} aria-label="Machine précédente">←</button><button className="machineArrow next" type="button" onClick={() => select(active + 1)} aria-label="Machine suivante">→</button>
         </div>

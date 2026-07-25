@@ -9,14 +9,15 @@
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
     "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
-    "test": "npm run build && node --experimental-loader ./tests/cloudflare-loader.mjs --test tests/rendered-html.test.mjs",
+    "test": "npm run build && node --experimental-loader ./tests/cloudflare-loader.mjs --test tests/rendered-html.test.mjs tests/intake-security.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.8",
     "d3-geo": "^3.1.1",
     "drizzle-orm": "0.45.2",
-    "next": "16.2.6",
+    "next": "^16.2.11",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "topojson-client": "^3.1.0",
@@ -42,5 +43,9 @@
     "vite": "8.0.13",
     "wrangler": "4.92.0"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "postcss": "8.5.23",
+    "sharp": "0.35.3"
+  }
 }

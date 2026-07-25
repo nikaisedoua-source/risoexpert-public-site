@@ -1,7 +1,9 @@
 "use client";
 
 import Script from "next/script";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { getSupabaseBrowserClient } from "./supabase-browser";
 
 type User = { name: string; email: string; picture?: string };
 type GoogleCredential = { credential: string };
@@ -20,14 +22,40 @@ export default function GoogleSignIn() {
   const [clientId, setClientId] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
+  const [useSupabase, setUseSupabase] = useState(false);
 
   useEffect(() => {
-    fetch("/api/auth/session").then((r) => r.json()).then((data) => setUser(data.user));
-    fetch("/api/auth/google/config").then((r) => r.json()).then((data) => setClientId(data.clientId || ""));
+    let unsubscribe: (() => void) | undefined;
+    getSupabaseBrowserClient().then(async (client) => {
+      if (!client) {
+        fetch("/api/auth/session").then((r) => r.json()).then((data) => setUser(data.user));
+        fetch("/api/auth/google/config").then((r) => r.json()).then((data) => setClientId(data.clientId || ""));
+        return;
+      }
+      setUseSupabase(true);
+      const { data } = await client.auth.getUser();
+      if (data.user) {
+        setUser({
+          name: data.user.user_metadata.full_name || data.user.email || "Client",
+          email: data.user.email || "",
+          picture: data.user.user_metadata.avatar_url,
+        });
+      }
+      const { data: listener } = client.auth.onAuthStateChange((_event, session) => {
+        const account = session?.user;
+        setUser(account ? {
+          name: account.user_metadata.full_name || account.email || "Client",
+          email: account.email || "",
+          picture: account.user_metadata.avatar_url,
+        } : null);
+      });
+      unsubscribe = () => listener.subscription.unsubscribe();
+    });
+    return () => unsubscribe?.();
   }, []);
 
   useEffect(() => {
-    if (!ready || !clientId || !target.current || !window.google) return;
+    if (useSupabase || !ready || !clientId || !target.current || !window.google) return;
     window.google.accounts.id.initialize({
       client_id: clientId,
       callback: async ({ credential }) => {
@@ -40,17 +68,37 @@ export default function GoogleSignIn() {
     });
     target.current.replaceChildren();
     window.google.accounts.id.renderButton(target.current, { theme: "outline", size: "medium", text: "signin_with", shape: "pill" });
-  }, [ready, clientId]);
+  }, [ready, clientId, useSupabase]);
 
   async function signOut() {
+    const client = await getSupabaseBrowserClient();
+    if (client) await client.auth.signOut();
     await fetch("/api/auth/session", { method: "DELETE" });
     setUser(null);
   }
 
+  async function signInWithSupabase() {
+    const client = await getSupabaseBrowserClient();
+    if (!client) return;
+    await client.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
+  }
+
   return <>
-    <Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" onLoad={() => setReady(true)} />
+    {!useSupabase && <Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" onLoad={() => setReady(true)} />}
     {user ? <button className="userChip" type="button" onClick={signOut} title="Cliquer pour se déconnecter">
-      {user.picture && <img src={user.picture} alt="" referrerPolicy="no-referrer" />}<span>{user.name}</span>
-    </button> : <div className="googleSignIn" ref={target} aria-label="Connexion avec Google" />}
+      {user.picture && <Image
+        src={user.picture}
+        alt=""
+        width={32}
+        height={32}
+        unoptimized
+        referrerPolicy="no-referrer"
+      />}<span>{user.name}</span>
+    </button> : useSupabase
+      ? <button className="navAction" type="button" onClick={signInWithSupabase}>Connexion Google</button>
+      : <div className="googleSignIn" ref={target} aria-label="Connexion avec Google" />}
   </>;
 }

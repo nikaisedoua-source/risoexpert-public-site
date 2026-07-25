@@ -12,6 +12,7 @@ export const visitorLocations = sqliteTable("visitor_locations", {
 
 export const supportRequests = sqliteTable("support_requests", {
   id: text("id").primaryKey(),
+  userId: text("user_id"),
   name: text("name").notNull(),
   phone: text("phone").notNull(),
   location: text("location").notNull(),
@@ -24,6 +25,14 @@ export const supportRequests = sqliteTable("support_requests", {
   status: text("status").notNull().default("nouvelle"),
   consentedAt: text("consented_at").notNull(),
   createdAt: text("created_at").notNull(),
+});
+
+export const intakeRateLimits = sqliteTable("intake_rate_limits", {
+  key: text("key").primaryKey(),
+  clientHash: text("client_hash").notNull(),
+  day: text("day").notNull(),
+  requests: integer("requests").notNull().default(0),
+  updatedAt: text("updated_at").notNull(),
 });
 
 export const users = sqliteTable("users", {

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { currentSupabaseAccessToken } from "./supabase-browser";
 
 export default function RequestForm() {
   const [reference, setReference] = useState("");
@@ -30,9 +31,13 @@ export default function RequestForm() {
     const data = new FormData(event.currentTarget);
     const payload = Object.fromEntries(data.entries());
     try {
+      const accessToken = await currentSupabaseAccessToken();
       const response = await fetch("/api/requests", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          ...(accessToken ? { authorization: `Bearer ${accessToken}` } : {}),
+        },
         body: JSON.stringify({ ...payload, ...coordinates, legalConsent: data.get("legalConsent") === "on" }),
       });
       const result = await response.json() as { id?: string; error?: string };
@@ -48,6 +53,10 @@ export default function RequestForm() {
 
   return (
     <form className="requestForm" onSubmit={submit}>
+      <label className="honeypot" aria-hidden="true">
+        Site web
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </label>
       <div className="formGrid">
         <label>Nom complet<input name="name" autoComplete="name" required /></label>
         <label>Téléphone<input name="phone" type="tel" autoComplete="tel" required /></label>
