@@ -5,6 +5,7 @@ import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import { headers } from "next/headers";
 import Image from "next/image";
+import { env } from "cloudflare:workers";
 
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
@@ -17,11 +18,42 @@ const services = [
   ["Suivi professionnel", "Historique des machines, devis, rendez-vous et factures."],
 ];
 
+async function activeAndroidRelease() {
+  const runtime = env as unknown as {
+    SUPABASE_URL?: string;
+    SUPABASE_SERVICE_ROLE_KEY?: string;
+  };
+  if (!runtime.SUPABASE_URL || !runtime.SUPABASE_SERVICE_ROLE_KEY) return null;
+  const response = await fetch(
+    `${runtime.SUPABASE_URL.replace(/\/$/, "")}/rest/v1/android_releases`
+      + "?is_active=eq.true&select=version_name,size_bytes,released_at,release_notes_fr,checksum_sha256&limit=1",
+    {
+      headers: {
+        apikey: runtime.SUPABASE_SERVICE_ROLE_KEY,
+        authorization: `Bearer ${runtime.SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      cache: "no-store",
+    },
+  );
+  if (!response.ok) return null;
+  return (await response.json() as Array<{
+    version_name: string;
+    size_bytes: number;
+    released_at: string;
+    release_notes_fr: string;
+    checksum_sha256: string;
+  }>)[0] ?? null;
+}
+
 export default async function Home() {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
+  const androidRelease = await activeAndroidRelease();
+  const androidSize = androidRelease
+    ? `${(androidRelease.size_bytes / 1024 / 1024).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} Mo`
+    : null;
   const schema = {
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "LocalBusiness"],
@@ -80,7 +112,7 @@ export default async function Home() {
         <RequestForm />
       </section>
 
-      <section className="download" id="application"><div className="shell downloadGrid"><div className="phoneMock"><div className="phoneTop">RisoExpert <i/></div><h3>Bonjour !</h3><p>Comment pouvons-nous vous aider aujourd’hui ?</p><div className="mockCard"><b>Déclarer une panne</b><span>Décrivez votre problème en quelques étapes simples.</span><strong>Commencer →</strong></div><div className="mockTiles"><span>Mes machines</span><span>Mes demandes</span></div></div><div><p className="kicker gold">Application Android</p><h2>Votre assistance vous accompagne partout.</h2><p>Enregistrez vos équipements, gardez l’historique de vos demandes et transmettez une panne directement au technicien.</p><a className="button goldButton" href="/api/android-apk">Télécharger l’APK Android <small>61,9 Mo</small></a><p className="installNote">Téléchargement direct sécurisé — Android uniquement.</p></div></div></section>
+      <section className="download" id="application"><div className="shell downloadGrid"><div className="phoneMock"><div className="phoneTop">RisoExpert <i/></div><h3>Bonjour !</h3><p>Comment pouvons-nous vous aider aujourd’hui ?</p><div className="mockCard"><b>Déclarer une panne</b><span>Décrivez votre problème en quelques étapes simples.</span><strong>Commencer →</strong></div><div className="mockTiles"><span>Mes machines</span><span>Mes demandes</span></div></div><div><p className="kicker gold">Application Android</p><h2>Votre assistance vous accompagne partout.</h2><p>Enregistrez vos équipements, gardez l’historique de vos demandes et transmettez une panne directement au technicien.</p><a className="button goldButton" href="/api/android-apk">Télécharger l’APK Android {androidRelease && <small>v{androidRelease.version_name}{androidSize ? ` • ${androidSize}` : ""}</small>}</a>{androidRelease && <p className="installNote">{androidRelease.release_notes_fr}<br />SHA-256 : <code>{androidRelease.checksum_sha256.slice(0, 16)}…</code></p>}<p className="installNote">Téléchargement direct sécurisé — Android uniquement.</p></div></div></section>
 
       <VisitorInsights />
       <div className="shell"><SocialShare /></div>
