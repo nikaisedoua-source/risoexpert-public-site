@@ -8,6 +8,7 @@ import Image from "next/image";
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
 const facebook = "https://www.facebook.com/people/Maintenancier-Riso/61581266351611/";
+const odooSite = "https://risoexpert.odoo.com/";
 
 const services = [
   ["Diagnostic précis", "Photos, vidéo et message d’erreur analysés avant le déplacement."],
@@ -53,7 +54,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a></nav>
+          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
           <GoogleSignIn />
         </div>
       </header>
@@ -69,7 +70,7 @@ export default async function Home() {
             <p className="apkNotice">Installation Android directe : votre téléphone peut demander d’autoriser l’installation depuis le navigateur.</p>
             <div className="heroTrust"><span>Réponse sous 24 h ouvrées</span><span>Devis avant intervention</span><span>Suivi personnalisé</span></div>
           </div>
-          <div className="heroPortrait" aria-label="Technicien RisoExpert"><div className="portraitHalo"/><Image src="/risoexpert-avatar-sheet.png" alt="Avatar du technicien RisoExpert en tenue professionnelle" width={1080} height={720} priority sizes="(max-width: 950px) 100vw, 50vw"/><div className="responseBadge"><i/> Disponible pour un diagnostic<small>Contact direct : 07 77 80 80 51</small></div></div>
+          <div className="heroPortrait" aria-label="Technicien RisoExpert"><div className="portraitHalo"/><Image src="/risoexpert-avatar-single.png" alt="Avatar détouré du technicien RisoExpert en tenue professionnelle" width={1024} height={1536} priority sizes="(max-width: 950px) 100vw, 50vw"/><div className="responseBadge"><i/> Disponible pour un diagnostic<small>Contact direct : 07 77 80 80 51</small></div></div>
         </div>
       </section>
 
@@ -107,7 +108,7 @@ export default async function Home() {
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebook} target="_blank" rel="noreferrer">Suivre RisoExpert sur Facebook →</a></div></div></section>
 
-      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
+      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href={odooSite}>Accéder au site Odoo</a><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
       <a className="floatingWhatsapp" href={whatsapp}>WhatsApp</a>
     </main>
   );
