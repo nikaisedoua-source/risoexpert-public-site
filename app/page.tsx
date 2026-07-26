@@ -65,7 +65,8 @@ export default async function Home() {
             <p className="kicker gold">Assistance technique de proximité • Ebimpé — Abidjan</p>
             <h1>L’assistance technique RISO <em>simplifiée.</em></h1>
             <p className="heroLead">Déclarez votre panne, envoyez vos photos et recevez l’accompagnement direct d’un technicien qualifié.</p>
-            <div className="heroActions"><a className="button goldButton" href={`tel:${phone}`}>Appeler en urgence</a><a className="button ghostButton" href="#demande">Déclarer une panne</a></div>
+            <div className="heroActions"><a className="button goldButton" href={`tel:${phone}`}>Appeler en urgence</a><a className="button ghostButton" href="#demande">Déclarer une panne</a><a className="button ghostButton" href="/api/android-apk">Télécharger l’APK Android</a></div>
+            <p className="apkNotice">Installation Android directe : votre téléphone peut demander d’autoriser l’installation depuis le navigateur.</p>
             <div className="heroTrust"><span>Réponse sous 24 h ouvrées</span><span>Devis avant intervention</span><span>Suivi personnalisé</span></div>
           </div>
           <div className="heroPortrait" aria-label="Technicien RisoExpert"><div className="portraitHalo"/><Image src="/risoexpert-avatar-sheet.png" alt="Avatar du technicien RisoExpert en tenue professionnelle" width={1080} height={720} priority sizes="(max-width: 950px) 100vw, 50vw"/><div className="responseBadge"><i/> Disponible pour un diagnostic<small>Contact direct : 07 77 80 80 51</small></div></div>
@@ -106,7 +107,7 @@ export default async function Home() {
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebook} target="_blank" rel="noreferrer">Suivre RisoExpert sur Facebook →</a></div></div></section>
 
-      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
+      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>+225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp</a><a href={facebook}>Facebook</a></div><div><b>Informations</b><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
       <a className="floatingWhatsapp" href={whatsapp}>WhatsApp</a>
     </main>
   );

@@ -36,7 +36,8 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /Devis avant intervention/);
   assert.match(html, /Questions fréquentes/);
   assert.match(html, /Appeler en urgence/);
-  assert.doesNotMatch(html, /href="\/api\/android-apk"/);
+  assert.match(html, /href="\/api\/android-apk"/);
+  assert.match(html, /Télécharger l’APK Android/);
   assert.doesNotMatch(html, /visites enregistrées|premières visites réelles|suivi GPS/i);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /href="\/conditions"/);

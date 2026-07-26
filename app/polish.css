@@ -23,6 +23,7 @@ h2 { font-size: clamp(31px, 3.8vw, 48px); }
 @media (max-width: 720px) { .socialShare { grid-template-columns: 1fr; padding: 24px; } .shareLinks { justify-content: flex-start; } }
 
 .pricingGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 45px; }
+.apkNotice { max-width: 660px; margin: 12px 0 0; color: #aebed5; font-size: 12px; line-height: 1.5; }
 .pricingGrid article { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
 .pricingGrid article > span { font: 800 12px var(--font-mono); color: var(--gold); }
 .pricingGrid h3 { font-size: 21px; margin: 32px 0 12px; }
