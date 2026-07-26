@@ -33,8 +33,11 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /tel:\+2250777808051/);
   assert.match(html, /facebook\.com\/people\/Maintenancier-Riso\/61581266351611/);
   assert.match(html, /Expliquez votre problème maintenant/);
-  assert.match(html, /href="\/api\/android-apk"/);
-  assert.match(html, /visites enregistrées/);
+  assert.match(html, /Devis avant intervention/);
+  assert.match(html, /Questions fréquentes/);
+  assert.match(html, /Appeler en urgence/);
+  assert.doesNotMatch(html, /href="\/api\/android-apk"/);
+  assert.doesNotMatch(html, /visites enregistrées|premières visites réelles|suivi GPS/i);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /href="\/conditions"/);
   assert.match(html, /property="og:image" content="https:\/\/riso-assist-pro\.ci\/og\.png"/);

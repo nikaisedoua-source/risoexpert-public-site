@@ -7,22 +7,6 @@ export default function RequestForm() {
   const [reference, setReference] = useState("");
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
-  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | null>(null);
-  const [geoStatus, setGeoStatus] = useState("");
-
-  function locate() {
-    if (!navigator.geolocation) return setGeoStatus("GPS non disponible sur cet appareil.");
-    setGeoStatus("Localisation GPS en cours…");
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setCoordinates({ latitude: coords.latitude, longitude: coords.longitude });
-        setGeoStatus(`Position GPS ajoutée (précision ±${Math.round(coords.accuracy)} m).`);
-      },
-      () => setGeoStatus("Position non autorisée. Vous pouvez saisir la commune manuellement."),
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
-    );
-  }
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSending(true);
@@ -38,7 +22,7 @@ export default function RequestForm() {
           "content-type": "application/json",
           ...(accessToken ? { authorization: `Bearer ${accessToken}` } : {}),
         },
-        body: JSON.stringify({ ...payload, ...coordinates, legalConsent: data.get("legalConsent") === "on" }),
+        body: JSON.stringify({ ...payload, legalConsent: data.get("legalConsent") === "on" }),
       });
       const result = await response.json() as { id?: string; error?: string };
       if (!response.ok || !result.id) throw new Error(result.error || "Enregistrement impossible.");
@@ -63,11 +47,9 @@ export default function RequestForm() {
         <label>Ville ou commune<input name="location" autoComplete="address-level2" required /></label>
         <label>Machine et modèle<input name="machine" placeholder="Ex. RISO SF 9350" required /></label>
         <label>Urgence<select name="urgency" defaultValue="Normale"><option>Normale</option><option>Élevée</option><option>Critique — production arrêtée</option></select></label>
-        <label>Message d’erreur<input name="error" placeholder="Code ou message affiché" /></label>
       </div>
-      <div className="geoField"><button type="button" onClick={locate}>Utiliser ma position GPS</button>{geoStatus && <span role="status">{geoStatus}</span>}</div>
-      <label>Expliquez précisément le problème<textarea name="problem" rows={5} minLength={10} required placeholder="Depuis quand, bruit observé, qualité d’impression, actions déjà tentées…" /></label>
-      <p className="formHelp">La demande est enregistrée directement et transmise au technicien. WhatsApp n’est pas nécessaire.</p>
+      <label>Décrivez brièvement le problème<textarea name="problem" rows={4} minLength={10} required placeholder="Code d’erreur, bruit, qualité d’impression ou production arrêtée…" /></label>
+      <p className="formHelp">Formulaire court, sans localisation GPS. Votre demande reçoit un numéro de dossier.</p>
       <label className="consentField">
         <input name="legalConsent" type="checkbox" required />
         <span>J’ai lu et j’accepte les <a href="/conditions" target="_blank">Conditions d’utilisation</a> et la <a href="/confidentialite" target="_blank">Politique de confidentialité</a>. Je consens au traitement de mes informations pour gérer ma demande de dépannage.</span>

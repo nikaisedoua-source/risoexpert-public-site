@@ -21,3 +21,22 @@ h2 { font-size: clamp(31px, 3.8vw, 48px); }
 @media (max-width: 580px) { h1 { font-size: 42px; } .mapPanel svg { height: 460px; } }
 @media (max-width: 720px) { .googleSignIn, .userChip { display: none; } }
 @media (max-width: 720px) { .socialShare { grid-template-columns: 1fr; padding: 24px; } .shareLinks { justify-content: flex-start; } }
+
+.pricingGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 45px; }
+.pricingGrid article { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
+.pricingGrid article > span { font: 800 12px var(--font-mono); color: var(--gold); }
+.pricingGrid h3 { font-size: 21px; margin: 32px 0 12px; }
+.pricingGrid p { color: var(--muted); line-height: 1.65; }
+.directContact strong { font-size: 18px; }
+.directContact .whatsappUrgent { font-size: 14px; color: #176b35; }
+.faq { background: #fff; }
+.faqList { max-width: 900px; margin: 45px auto 0; border-top: 1px solid var(--line); }
+.faqList details { border-bottom: 1px solid var(--line); padding: 0 4px; }
+.faqList summary { cursor: pointer; list-style: none; font-size: 18px; font-weight: 800; padding: 23px 40px 23px 0; position: relative; }
+.faqList summary::-webkit-details-marker { display: none; }
+.faqList summary::after { content: "+"; position: absolute; right: 5px; top: 17px; color: var(--blue); font-size: 25px; }
+.faqList details[open] summary::after { content: "−"; }
+.faqList p { color: var(--muted); line-height: 1.7; margin: 0 0 24px; max-width: 780px; }
+
+@media (max-width: 950px) { .pricingGrid { grid-template-columns: 1fr; } }
+@media (max-width: 580px) { .directContact a { font-size: 19px; } .faqList summary { font-size: 16px; } }
