@@ -7,11 +7,11 @@ async function render(path = "/") {
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request(`https://riso-assist-pro.ci${path}`, {
+    new Request(`https://risoexpert.odoo.com${path}`, {
       headers: {
         accept: "text/html",
-        host: "riso-assist-pro.ci",
-        "x-forwarded-host": "riso-assist-pro.ci",
+        host: "risoexpert.odoo.com",
+        "x-forwarded-host": "risoexpert.odoo.com",
         "x-forwarded-proto": "https",
       },
     }),
@@ -41,7 +41,7 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.doesNotMatch(html, /visites enregistrées|premières visites réelles|suivi GPS/i);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /href="\/conditions"/);
-  assert.match(html, /property="og:image" content="https:\/\/riso-assist-pro\.ci\/og\.png"/);
+  assert.match(html, /property="og:image" content="https:\/\/risoexpert\.odoo\.com\/og\.png"/);
   assert.doesNotMatch(html, /localhost|codex-preview|Building your site/);
 });
 
@@ -71,11 +71,11 @@ test("rend la politique de confidentialité", async () => {
 test("expose les fichiers de référencement", async () => {
   const robots = await render("/robots.txt");
   assert.equal(robots.status, 200);
-  assert.match(await robots.text(), /Sitemap: https:\/\/riso-assist-pro\.ci\/sitemap\.xml/);
+  assert.match(await robots.text(), /Sitemap: https:\/\/risoexpert\.odoo\.com\/sitemap\.xml/);
 
   const sitemap = await render("/sitemap.xml");
   assert.equal(sitemap.status, 200);
   const xml = await sitemap.text();
-  assert.match(xml, /<loc>https:\/\/riso-assist-pro\.ci\/<\/loc>/);
-  assert.match(xml, /<loc>https:\/\/riso-assist-pro\.ci\/conditions<\/loc>/);
+  assert.match(xml, /<loc>https:\/\/risoexpert\.odoo\.com\/<\/loc>/);
+  assert.match(xml, /<loc>https:\/\/risoexpert\.odoo\.com\/conditions<\/loc>/);
 });

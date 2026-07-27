@@ -1,6 +1,6 @@
 "use client";
 
-const site = "https://riso-assist-pro.ci";
+const site = "https://risoexpert.odoo.com";
 const message = "RisoExpert — dépannage et maintenance des machines RISO en Côte d’Ivoire";
 
 export default function SocialShare() {
