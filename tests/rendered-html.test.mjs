@@ -28,6 +28,7 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   const html = await response.text();
   assert.match(html, /<html lang="fr">/i);
   assert.match(html, /RisoExpert \| Technicien RISO en Côte d’Ivoire/);
+  assert.match(html, /fW1ox3Pn4mb5nef3Lxk6ffyM0kDgtYhxi9cmeTKxRpE/);
   assert.match(html, /L’assistance technique RISO/);
   assert.match(html, /https:\/\/wa\.me\/2250777808051/);
   assert.match(html, /tel:\+2250777808051/);
