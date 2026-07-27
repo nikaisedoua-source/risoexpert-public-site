@@ -34,6 +34,11 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /facebook\.com\/share\/1EUQU266gP/);
   assert.match(html, /Expliquez votre problème maintenant/);
   assert.match(html, /Devis avant intervention/);
+  assert.match(html, /toutes les villes de Côte d’Ivoire/i);
+  assert.match(html, /guide technique essentiel/i);
+  assert.match(html, /Source officielle RISO/i);
+  assert.match(html, /Les modèles RISO, actuels et historiques/i);
+  assert.match(html, /ComColor GN/i);
   assert.match(html, /Questions fréquentes/);
   assert.match(html, /Appeler en urgence/);
   assert.match(html, /href="\/api\/android-apk"/);

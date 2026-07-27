@@ -2,6 +2,7 @@ import RequestForm from "./request-form";
 import GoogleSignIn from "./google-sign-in";
 import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
+import ModelCatalog from "./model-catalog";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -16,14 +17,14 @@ const odooSite = "https://risoexpert.odoo.com/";
 
 const services = [
   ["Diagnostic précis", "Photos, vidéo et message d’erreur analysés avant le déplacement."],
-  ["Intervention rapide", "Dépannage sur site à Abidjan et accompagnement en Côte d’Ivoire."],
+  ["Couverture nationale", "Dépannage sur site dans toutes les villes de Côte d’Ivoire."],
   ["Maintenance préventive", "Contrôles réguliers pour réduire les arrêts de production."],
   ["Suivi professionnel", "Historique des machines, devis, rendez-vous et factures."],
 ];
 
 const faqs = [
   ["Sous quel délai vais-je recevoir une réponse ?", "Pour une demande complète, RisoExpert s’engage à envoyer une première réponse et, si nécessaire, un devis sous 24 heures ouvrées."],
-  ["Quelles zones sont couvertes ?", "Les interventions sur site sont proposées à Abidjan. Les demandes ailleurs en Côte d’Ivoire sont étudiées au cas par cas, avec les frais de déplacement annoncés avant validation."],
+  ["Quelles zones sont couvertes ?", "Nous intervenons dans toutes les villes de Côte d’Ivoire. Le délai et les éventuels frais de déplacement sont confirmés avant votre validation, selon votre localisation."],
   ["Le diagnostic à distance suffit-il toujours ?", "Non. Les photos, vidéos et codes d’erreur permettent une première orientation. Le tarif final n’est confirmé qu’après avoir identifié la panne et les pièces éventuellement nécessaires."],
   ["Comment le prix est-il fixé ?", "Le devis distingue la main-d’œuvre, le déplacement et les pièces. Aucun travail payant n’est engagé sans votre accord préalable."],
   ["L’intervention est-elle garantie ?", "La garantie applicable est précisée sur le devis ou la facture selon la nature de la réparation et les pièces remplacées."],
@@ -58,7 +59,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
+          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
           <GoogleSignIn />
         </div>
       </header>
@@ -67,7 +68,7 @@ export default async function Home() {
         <div className="heroGlow" />
         <div className="shell heroGrid">
           <div className="heroCopy">
-            <p className="kicker gold">Assistance technique de proximité • Ebimpé — Abidjan</p>
+            <p className="kicker gold">Assistance technique nationale • Toutes les villes de Côte d’Ivoire</p>
             <h1>L’assistance technique RISO <em>simplifiée.</em></h1>
             <p className="heroLead">Déclarez votre panne, envoyez vos photos et recevez l’accompagnement direct d’un technicien qualifié.</p>
             <div className="heroActions"><a className="button goldButton" href={`tel:${phone}`}>Appeler en urgence</a><a className="button ghostButton" href="#demande">Déclarer une panne</a><a className="button ghostButton" href="/api/android-apk">Télécharger l’APK Android</a></div>
@@ -86,6 +87,7 @@ export default async function Home() {
       </section>
 
       <MachineShowcase />
+      <ModelCatalog />
 
       <section className="process"><div className="shell processGrid"><div><p className="kicker gold">Simple et transparent</p><h2>Trois étapes. Une machine remise en service.</h2></div><ol><li><b>01</b><div><strong>Décrivez la panne</strong><span>Modèle, symptômes, message d’erreur et localisation.</span></div></li><li><b>02</b><div><strong>Recevez une première orientation</strong><span>Diagnostic à distance et préparation du déplacement.</span></div></li><li><b>03</b><div><strong>Suivez l’intervention</strong><span>Rendez-vous, devis et historique disponibles.</span></div></li></ol></div></section>
 
