@@ -30,5 +30,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr"><body className={`${sans.variable} ${mono.variable}`}>{children}</body></html>;
+  return (
+    <html lang="fr">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="fW1ox3Pn4mb5nef3Lxk6ffyM0kDgtYhxi9cmeTKxRpE"
+        />
+      </head>
+      <body className={`${sans.variable} ${mono.variable}`}>{children}</body>
+    </html>
+  );
 }
