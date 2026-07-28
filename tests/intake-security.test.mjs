@@ -13,9 +13,11 @@ const [route, form, schema, migration] = await Promise.all([
 test("valide le formulaire public côté serveur", () => {
   assert.match(route, /body\.legalConsent !== true/);
   assert.match(route, /allowedUrgencies\.has\(urgency\)/);
+  assert.match(route, /allowedCountries\.has\(country\)/);
   assert.match(route, /problem\.length < 10/);
   assert.match(route, /Trop de demandes/);
   assert.match(form, /name="website"/);
+  assert.match(form, /name="country"/);
 });
 
 test("ne stocke pas l'adresse IP brute et associe la session disponible", () => {

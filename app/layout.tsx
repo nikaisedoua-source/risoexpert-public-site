@@ -17,14 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const image = `${protocol}://${host}/og.png`;
   return {
-    title: "RisoExpert | Technicien RISO en Côte d’Ivoire",
-    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire. Demande en ligne enregistrée et suivie par un technicien.",
-    keywords: ["RisoExpert", "technicien RISO Côte d’Ivoire", "dépannage duplicopieur RISO", "maintenance RISO", "réparation RISO Abidjan", "réparation RISO Yamoussoukro", "risographe Côte d’Ivoire"],
+    title: "RisoExpert | Assistance RISO en Côte d’Ivoire et au Cameroun",
+    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire et au Cameroun. Demande en ligne suivie par un technicien.",
+    keywords: ["RisoExpert", "technicien RISO Côte d’Ivoire", "technicien RISO Cameroun", "dépannage duplicopieur RISO", "maintenance RISO", "réparation RISO Abidjan", "réparation RISO Douala", "réparation RISO Yaoundé"],
     alternates: { canonical: `${protocol}://${host}/` },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
     verification: { google: "fW1ox3Pn4mb5nef3Lxk6ffyM0kDgtYhxi9cmeTKxRpE" },
     icons: { icon: "/favicon.png", shortcut: "/favicon.png" },
-    openGraph: { title: "RisoExpert — Dépannage et maintenance RISO en Côte d’Ivoire", description: "Diagnostic, dépannage et entretien de duplicopieurs et risographes RISO dans toutes les villes de Côte d’Ivoire.", type: "website", locale: "fr_CI", siteName: "RisoExpert", images: [{ url: image, width: 1200, height: 630, alt: "RisoExpert — Assistance technique RISO" }] },
+    openGraph: { title: "RisoExpert — Assistance RISO en Côte d’Ivoire et au Cameroun", description: "Diagnostic, dépannage et entretien de duplicopieurs et risographes RISO dans les deux pays.", type: "website", locale: "fr_CI", alternateLocale: ["fr_CM"], siteName: "RisoExpert", images: [{ url: image, width: 1200, height: 630, alt: "RisoExpert — Assistance technique RISO" }] },
     twitter: { card: "summary_large_image", title: "RisoExpert", description: "L’expertise RISO, à portée de main.", images: [image] },
   };
 }

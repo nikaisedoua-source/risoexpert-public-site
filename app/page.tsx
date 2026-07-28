@@ -17,14 +17,14 @@ const odooSite = "https://risoexpert.odoo.com/";
 
 const services = [
   ["Diagnostic précis", "Photos, vidéo et message d’erreur analysés avant le déplacement."],
-  ["Couverture nationale", "Dépannage sur site dans toutes les villes de Côte d’Ivoire."],
+  ["Couverture internationale", "Assistance dans toutes les villes de Côte d’Ivoire et du Cameroun."],
   ["Maintenance préventive", "Contrôles réguliers pour réduire les arrêts de production."],
   ["Suivi professionnel", "Historique des machines, devis, rendez-vous et factures."],
 ];
 
 const faqs = [
   ["Sous quel délai vais-je recevoir une réponse ?", "Pour une demande complète, RisoExpert s’engage à envoyer une première réponse et, si nécessaire, un devis sous 24 heures ouvrées."],
-  ["Quelles zones sont couvertes ?", "Nous intervenons dans toutes les villes de Côte d’Ivoire. Le délai et les éventuels frais de déplacement sont confirmés avant votre validation, selon votre localisation."],
+  ["Quelles zones sont couvertes ?", "Nous accompagnons les clients dans toutes les villes de Côte d’Ivoire et du Cameroun. Le mode d’assistance, le délai et les éventuels frais de déplacement sont confirmés avant votre validation."],
   ["Le diagnostic à distance suffit-il toujours ?", "Non. Les photos, vidéos et codes d’erreur permettent une première orientation. Le tarif final n’est confirmé qu’après avoir identifié la panne et les pièces éventuellement nécessaires."],
   ["Comment le prix est-il fixé ?", "Le devis distingue la main-d’œuvre, le déplacement et les pièces. Aucun travail payant n’est engagé sans votre accord préalable."],
   ["L’intervention est-elle garantie ?", "La garantie applicable est précisée sur le devis ou la facture selon la nature de la réparation et les pièces remplacées."],
@@ -45,8 +45,11 @@ export default async function Home() {
     url: `${origin}/`,
     image: `${origin}/og.png`,
     priceRange: "Devis sous 24 h ouvrées",
-    description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO à Abidjan et en Côte d’Ivoire.",
-    areaServed: "Côte d’Ivoire",
+    description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire et au Cameroun.",
+    areaServed: [
+      { "@type": "Country", name: "Côte d’Ivoire" },
+      { "@type": "Country", name: "Cameroun" },
+    ],
     sameAs: [facebookAccount, facebookPage, linkedin, xProfile],
     knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
     serviceType: ["Diagnostic RISO", "Dépannage de duplicopieurs", "Maintenance préventive", "Réparation RISO"],
@@ -68,7 +71,7 @@ export default async function Home() {
         <div className="heroGlow" />
         <div className="shell heroGrid">
           <div className="heroCopy">
-            <p className="kicker gold">Assistance technique nationale • Toutes les villes de Côte d’Ivoire</p>
+            <p className="kicker gold">Assistance RISO • Côte d’Ivoire 🇨🇮 et Cameroun 🇨🇲</p>
             <h1>L’assistance technique RISO <em>simplifiée.</em></h1>
             <p className="heroLead">Déclarez votre panne, envoyez vos photos et recevez l’accompagnement direct d’un technicien qualifié.</p>
             <div className="heroActions"><a className="button goldButton" href={`tel:${phone}`}>Appeler en urgence</a><a className="button ghostButton" href="#demande">Déclarer une panne</a><a className="button ghostButton" href="/api/android-apk">Télécharger l’APK Android</a></div>

@@ -44,6 +44,7 @@ export default function RequestForm() {
       <div className="formGrid">
         <label>Nom complet<input name="name" autoComplete="name" required /></label>
         <label>Téléphone<input name="phone" type="tel" autoComplete="tel" required /></label>
+        <label>Pays<select name="country" defaultValue="CI" required><option value="CI">Côte d’Ivoire</option><option value="CM">Cameroun</option></select></label>
         <label>Ville ou commune<input name="location" autoComplete="address-level2" required /></label>
         <label>Machine et modèle<input name="machine" placeholder="Ex. RISO SF 9350" required /></label>
         <label>Urgence<select name="urgency" defaultValue="Normale"><option>Normale</option><option>Élevée</option><option>Critique — production arrêtée</option></select></label>
