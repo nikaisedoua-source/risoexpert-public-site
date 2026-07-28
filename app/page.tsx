@@ -3,6 +3,7 @@ import GoogleSignIn from "./google-sign-in";
 import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import ModelCatalog from "./model-catalog";
+import CountryPresence from "./country-presence";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -83,6 +84,8 @@ export default async function Home() {
       </section>
 
       <section className="quickStrip"><div className="shell"><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></section>
+
+      <CountryPresence />
 
       <section className="section services shell" id="services">
         <div className="sectionHeading"><div><p className="kicker">Une expertise de proximité</p><h2>De la première alerte au retour en production.</h2></div><p>Un interlocuteur unique pour comprendre la panne, préparer l’intervention et suivre chaque machine dans la durée.</p></div>
