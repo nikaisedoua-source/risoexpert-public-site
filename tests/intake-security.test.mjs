@@ -22,6 +22,9 @@ test("valide le formulaire public côté serveur", () => {
 });
 
 test("protège les avis publics", () => {
+  assert.match(reviewsRoute, /currentUser\(request\)/);
+  assert.match(reviewsRoute, /photo de profil/);
+  assert.match(reviewsRoute, /profile_picture IS NOT NULL/);
   assert.match(reviewsRoute, /rating < 1 \|\| rating > 5/);
   assert.match(reviewsRoute, /Un seul avis peut être publié/);
   assert.match(reviewsRoute, /clientHash/);

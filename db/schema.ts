@@ -54,7 +54,9 @@ export const userSessions = sqliteTable("user_sessions", {
 
 export const customerReviews = sqliteTable("customer_reviews", {
   id: text("id").primaryKey(),
+  userId: text("user_id"),
   authorName: text("author_name").notNull(),
+  profilePicture: text("profile_picture"),
   country: text("country").notNull(),
   rating: integer("rating").notNull(),
   comment: text("comment").notNull(),
