@@ -4,6 +4,7 @@ import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import ModelCatalog from "./model-catalog";
 import CountryPresence from "./country-presence";
+import Reviews from "./reviews";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -63,7 +64,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
+          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#avis">Avis</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
           <GoogleSignIn />
         </div>
       </header>
@@ -115,6 +116,8 @@ export default async function Home() {
         <div className="sectionHeading"><div><p className="kicker">Questions fréquentes</p><h2>Ce qu’il faut savoir avant une intervention.</h2></div><p>Délais, zone couverte, prix et garanties : les réponses essentielles sont réunies ici.</p></div>
         <div className="faqList">{faqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
       </section>
+
+      <Reviews />
 
       <div className="shell"><SocialShare /></div>
 

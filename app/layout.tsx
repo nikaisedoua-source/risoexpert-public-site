@@ -7,6 +7,7 @@ import "./map-dynamic.css";
 import "./machine-showcase.css";
 import "./model-catalog.css";
 import "./country-presence.css";
+import "./reviews.css";
 import "./polish.css";
 
 const sans = Geist({ variable: "--font-sans", subsets: ["latin"] });

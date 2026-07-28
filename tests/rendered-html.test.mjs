@@ -47,6 +47,8 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /Les modèles RISO, actuels et historiques/i);
   assert.match(html, /ComColor GN/i);
   assert.match(html, /Questions fréquentes/);
+  assert.match(html, /Votre expérience compte/);
+  assert.match(html, /Publier mon avis/);
   assert.match(html, /Appeler en urgence/);
   assert.match(html, /href="\/api\/android-apk"/);
   assert.match(html, /Télécharger l’APK Android/);
