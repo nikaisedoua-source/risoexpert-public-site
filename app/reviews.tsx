@@ -8,7 +8,7 @@ type Review = {
   id: string;
   authorName: string;
   profilePicture: string;
-  country: "CI" | "CM";
+  country: string;
   rating: number;
   comment: string;
   createdAt: string;
@@ -16,7 +16,10 @@ type Review = {
 
 type Account = { name: string; picture: string } | null;
 
-const flags = { CI: "🇨🇮", CM: "🇨🇲" };
+const countryLabel = (country: string) =>
+  country === "CI" ? "🇨🇮 Côte d’Ivoire"
+    : country === "CM" ? "🇨🇲 Cameroun"
+      : `🌍 ${country}`;
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -134,7 +137,7 @@ export default function Reviews() {
                 >★</button>
               ))}
             </div>
-            <label>Pays<select name="country" defaultValue="CI"><option value="CI">🇨🇮 Côte d’Ivoire</option><option value="CM">🇨🇲 Cameroun</option></select></label>
+            <label>Pays<input name="country" required minLength={2} maxLength={60} placeholder="Ex. Sénégal, France, Canada…" /></label>
             <label>Votre commentaire<textarea name="comment" required minLength={10} maxLength={600} rows={4} placeholder="Qualité du diagnostic, délai, accompagnement…" /></label>
             <label className="reviewTrap" aria-hidden="true">Site<input name="website" tabIndex={-1} autoComplete="off" /></label>
             <button className="primary" disabled={sending || !account?.picture}>{sending ? "Publication…" : "Publier mon avis"}</button>
@@ -146,7 +149,7 @@ export default function Reviews() {
               <div className="emptyReviews"><span>☆</span><h3>Soyez le premier à laisser un avis</h3><p>Les avis publiés apparaîtront ici.</p></div>
             ) : reviews.map((review) => (
               <article className="reviewCard" key={review.id}>
-                <div><Image className="reviewAvatar" src={review.profilePicture} alt="" width={44} height={44} unoptimized referrerPolicy="no-referrer" /><p><strong>{review.authorName}</strong><small>{flags[review.country]} · {new Date(review.createdAt).toLocaleDateString("fr-FR")}</small></p><b>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</b></div>
+                <div><Image className="reviewAvatar" src={review.profilePicture} alt="" width={44} height={44} unoptimized referrerPolicy="no-referrer" /><p><strong>{review.authorName}</strong><small>{countryLabel(review.country)} · {new Date(review.createdAt).toLocaleDateString("fr-FR")}</small></p><b>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</b></div>
                 <p>{review.comment}</p>
               </article>
             ))}

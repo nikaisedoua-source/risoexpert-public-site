@@ -81,11 +81,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const country = clean(body.country, 2).toUpperCase();
+  const country = clean(body.country, 60);
   const comment = clean(body.comment, 600);
   const rating = Number(body.rating);
   if (
-    !["CI", "CM"].includes(country)
+    country.length < 2
     || !Number.isInteger(rating) || rating < 1 || rating > 5
     || comment.length < 10
   ) {
