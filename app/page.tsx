@@ -17,6 +17,7 @@ const facebookAccount = "https://www.facebook.com/people/Technicien-Riso/6158126
 const facebookPage = "https://www.facebook.com/people/Techniciens-Riso-ci/61558758369166/";
 const instagram = "https://www.instagram.com/risoexpert.ci/";
 const linkedin = "https://www.linkedin.com/company/risoexpert/";
+const xProfile = "https://x.com/RisoExpertCI";
 const odooSite = "https://risoexpert.odoo.com/";
 
 const services = [
@@ -54,7 +55,7 @@ export default async function Home() {
       { "@type": "Country", name: "Côte d’Ivoire" },
       { "@type": "Country", name: "Cameroun" },
     ],
-    sameAs: [facebookAccount, facebookPage, instagram, linkedin, whatsappChannel, telegram],
+    sameAs: [facebookAccount, facebookPage, instagram, linkedin, xProfile, whatsappChannel, telegram],
     knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
     serviceType: ["Diagnostic RISO", "Dépannage de duplicopieurs", "Maintenance préventive", "Réparation RISO"],
     address: { "@type": "PostalAddress", addressLocality: "Ebimpé, Abidjan", addressCountry: "CI" },
@@ -125,7 +126,7 @@ export default async function Home() {
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebookPage} target="_blank" rel="noreferrer">Suivre la page RisoExpert sur Facebook →</a></div></div></section>
 
-      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>Côte d’Ivoire : +225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp Côte d’Ivoire</a><a href={whatsappCameroon}>WhatsApp Cameroun : +237 77 41 66 92</a><a href={whatsappChannel}>Chaîne WhatsApp RISO SOLUTIONS</a><a href={telegram}>Groupe Telegram RisoExpert</a><a href={facebookAccount}>Profil professionnel Facebook</a><a href={facebookPage}>Page Facebook RisoExpert</a><a href={instagram}>Instagram — @risoexpert.ci</a><a href={linkedin}>LinkedIn — RisoExpert</a></div><div><b>Informations</b><a href={odooSite}>Accéder au site Odoo</a><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
+      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>Côte d’Ivoire : +225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp Côte d’Ivoire</a><a href={whatsappCameroon}>WhatsApp Cameroun : +237 77 41 66 92</a><a href={whatsappChannel}>Chaîne WhatsApp RISO SOLUTIONS</a><a href={telegram}>Groupe Telegram RisoExpert</a><a href={facebookAccount}>Profil professionnel Facebook</a><a href={facebookPage}>Page Facebook RisoExpert</a><a href={instagram}>Instagram — @risoexpert.ci</a><a href={linkedin}>LinkedIn — RisoExpert</a><a href={xProfile}>X — @RisoExpertCI</a></div><div><b>Informations</b><a href={odooSite}>Accéder au site Odoo</a><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
       <a className="floatingWhatsapp" href={whatsapp}>WhatsApp</a>
     </main>
   );

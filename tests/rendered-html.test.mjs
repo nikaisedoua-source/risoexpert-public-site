@@ -37,6 +37,7 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /tel:\+2250777808051/);
   assert.match(html, /facebook\.com\/people\/Techniciens-Riso-ci\/61558758369166/);
   assert.match(html, /linkedin\.com\/company\/risoexpert/);
+  assert.match(html, /x\.com\/RisoExpertCI/);
   assert.match(html, /whatsapp\.com\/channel\/0029VaeghXMATRSuL58NHn1x/);
   assert.match(html, /wa\.me\/23777416692/);
   assert.doesNotMatch(html, /nikaise-doua|DecassanKoui/);
