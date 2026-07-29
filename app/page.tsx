@@ -10,7 +10,7 @@ import Image from "next/image";
 
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
-const whatsappCameroon = `https://wa.me/23777416692?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO au Cameroun.")}`;
+const whatsappCameroon = "https://wa.me/23777416692";
 const whatsappChannel = "https://whatsapp.com/channel/0029VaeghXMATRSuL58NHn1x";
 const telegram = "https://t.me/+WSj_HtJdAts5N2E0";
 const facebookAccount = "https://www.facebook.com/people/Technicien-Riso/61581266351611/";
@@ -54,7 +54,7 @@ export default async function Home() {
       { "@type": "Country", name: "Côte d’Ivoire" },
       { "@type": "Country", name: "Cameroun" },
     ],
-    sameAs: [facebookAccount, facebookPage, instagram, linkedin, xProfile],
+    sameAs: [facebookAccount, facebookPage, instagram, linkedin, whatsappChannel, telegram],
     knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
     serviceType: ["Diagnostic RISO", "Dépannage de duplicopieurs", "Maintenance préventive", "Réparation RISO"],
     address: { "@type": "PostalAddress", addressLocality: "Ebimpé, Abidjan", addressCountry: "CI" },
