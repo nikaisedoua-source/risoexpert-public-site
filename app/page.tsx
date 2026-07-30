@@ -94,8 +94,8 @@ export default async function Home() {
       <section className="section launchSection shell" id="nouveautes" aria-labelledby="launch-title">
         <div className="launchVisual">
           <Image
-            src="/risoexpert-campaign-premium.png"
-            alt="RisoExpert, assistance technique professionnelle RISO en Côte d’Ivoire et au Cameroun"
+            src="/risoexpert-logo.png"
+            alt="Logo officiel RisoExpert"
             width={1254}
             height={1254}
             sizes="(max-width: 900px) 100vw, 48vw"
@@ -153,7 +153,19 @@ export default async function Home() {
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebookPage} target="_blank" rel="noreferrer">Suivre la page RisoExpert sur Facebook →</a></div></div></section>
 
-      <footer><div className="shell footerGrid"><div><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p></div><div><b>Contact</b><a href={`tel:${phone}`}>Côte d’Ivoire : +225 07 77 80 80 51</a><a href={whatsapp}>WhatsApp Côte d’Ivoire</a><a href={whatsappCameroon}>WhatsApp Cameroun : +237 77 41 66 92</a><a href={whatsappChannel}>Chaîne WhatsApp RISO SOLUTIONS</a><a href={telegram}>Groupe Telegram RisoExpert</a><a href={facebookAccount}>Profil professionnel Facebook</a><a href={facebookPage}>Page Facebook RisoExpert</a><a href={instagram}>Instagram — @risoexpert.ci</a><a href={linkedin}>LinkedIn — RisoExpert</a><a href={xProfile}>X — @RisoExpertCI</a></div><div><b>Informations</b><a href={odooSite}>Accéder au site Odoo</a><a href="/api/android-apk">Télécharger l’application Android</a><a href="#tarifs">Devis et tarifs</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
+      <footer className="siteFooter">
+        <div className="shell footerLead">
+          <div><p className="kicker gold">Assistance technique RISO</p><h2>Un problème sur votre machine&nbsp;?</h2><p>Envoyez le modèle, le code d’erreur, une photo et votre ville. Un technicien vous orientera avant toute intervention.</p></div>
+          <div className="footerLeadActions"><a className="button goldButton" href={whatsapp}>WhatsApp Côte d’Ivoire</a><a className="button footerOutline" href={whatsappCameroon}>WhatsApp Cameroun</a></div>
+        </div>
+        <div className="shell footerGrid">
+          <div className="footerBrand"><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire et au Cameroun.</p><div className="footerCountries"><span>🇨🇮 Côte d’Ivoire</span><span>🇨🇲 Cameroun</span></div></div>
+          <div><b>Services</b><a href="#services">Diagnostic et dépannage</a><a href="#machines">Machines prises en charge</a><a href="#catalogue">Catalogue RISO</a><a href="#tarifs">Devis et tarifs</a><a href="#demande">Ouvrir une demande</a></div>
+          <div><b>Plateformes</b><a href="/api/android-apk">Application Android</a><a href={odooSite}>Site Odoo</a><a href={facebookPage}>Facebook</a><a href={instagram}>Instagram</a><a href={linkedin}>LinkedIn</a><a href={xProfile}>X / Twitter</a></div>
+          <div><b>Communauté</b><a href={whatsappChannel}>Chaîne WhatsApp</a><a href={telegram}>Groupe Telegram</a><a href="#avis">Avis clients</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div>
+        </div>
+        <div className="shell footerBottom"><span>© 2026 RisoExpert. Tous droits réservés.</span><span>Service technique indépendant — RISO est une marque de son propriétaire.</span></div>
+      </footer>
       <a className="floatingWhatsapp" href={whatsapp}>WhatsApp</a>
     </main>
   );
