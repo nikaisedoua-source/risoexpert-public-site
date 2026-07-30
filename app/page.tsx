@@ -67,7 +67,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#avis">Avis</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
+          <nav aria-label="Navigation principale"><a href="#nouveautes">Nouveautés</a><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#avis">Avis</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Site Odoo</a></nav>
           <GoogleSignIn />
         </div>
       </header>
@@ -90,6 +90,33 @@ export default async function Home() {
       <section className="quickStrip"><div className="shell"><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></section>
 
       <CountryPresence />
+
+      <section className="section launchSection shell" id="nouveautes" aria-labelledby="launch-title">
+        <div className="launchVisual">
+          <Image
+            src="/risoexpert-campaign-premium.png"
+            alt="RisoExpert, assistance technique professionnelle RISO en Côte d’Ivoire et au Cameroun"
+            width={1254}
+            height={1254}
+            sizes="(max-width: 900px) 100vw, 48vw"
+          />
+        </div>
+        <div className="launchCopy">
+          <p className="kicker">RisoExpert évolue</p>
+          <h2 id="launch-title">Une assistance plus riche, plus sûre et plus proche.</h2>
+          <p>Le site et l’application réunissent désormais les outils essentiels pour identifier une machine, transmettre une panne et suivre l’intervention.</p>
+          <div className="launchFeatures">
+            <article><span>01</span><div><h3>Bibliothèque technique RISO</h3><p>Catalogue des familles actuelles et historiques, recherche par modèle et conseils essentiels issus de sources officielles.</p></div></article>
+            <article><span>02</span><div><h3>Côte d’Ivoire et Cameroun</h3><p>Deux contacts nationaux et une prise en charge adaptée à la ville, au modèle et au niveau d’urgence.</p></div></article>
+            <article><span>03</span><div><h3>Avis clients authentifiés</h3><p>Un compte et une photo de profil sont requis pour publier une évaluation visible sur la plateforme.</p></div></article>
+            <article><span>04</span><div><h3>Application Android</h3><p>Déclaration de panne, photos, machines, messages et suivi réunis dans une expérience mobile dédiée.</p></div></article>
+          </div>
+          <div className="launchActions">
+            <a className="button goldButton" href="/api/android-apk">Télécharger l’application</a>
+            <a className="button launchSecondary" href="#catalogue">Explorer les modèles</a>
+          </div>
+        </div>
+      </section>
 
       <section className="section services shell" id="services">
         <div className="sectionHeading"><div><p className="kicker">Une expertise de proximité</p><h2>De la première alerte au retour en production.</h2></div><p>Un interlocuteur unique pour comprendre la panne, préparer l’intervention et suivre chaque machine dans la durée.</p></div>
