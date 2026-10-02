@@ -8,6 +8,7 @@ import "./machine-showcase.css";
 import "./model-catalog.css";
 import "./reviews.css";
 import "./polish.css";
+import "./folder-section.css";
 
 const sans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const mono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });

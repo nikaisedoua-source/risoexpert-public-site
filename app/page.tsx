@@ -3,6 +3,7 @@ import GoogleSignIn from "./google-sign-in";
 import MachineShowcase from "./machine-showcase";
 import ModelCatalog from "./model-catalog";
 import Reviews from "./reviews";
+import FolderSection from "./folder-section";
 import { headers } from "next/headers";
 import Image from "next/image";
 
@@ -83,17 +84,26 @@ export default async function Home() {
 
       <section className="quickStrip"><div className="shell"><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></section>
 
-      <section className="section services shell" id="services">
+      <FolderSection id="services" index="01" title="Services RisoExpert" description="Diagnostic, dépannage, maintenance et suivi de vos machines.">
+      <section className="section services shell">
         <div className="sectionHeading"><div><p className="kicker">Une expertise de proximité</p><h2>De la première alerte au retour en production.</h2></div><p>Un interlocuteur unique pour comprendre la panne, préparer l’intervention et suivre chaque machine dans la durée.</p></div>
         <div className="serviceGrid">{services.map(([title, text], index) => <article className="serviceCard" key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
+      </FolderSection>
 
-      <MachineShowcase />
-      <ModelCatalog />
+      <FolderSection id="machines" index="02" title="Machines prises en charge" description="Les gammes RISO que nous diagnostiquons et entretenons.">
+        <MachineShowcase />
+      </FolderSection>
+      <FolderSection id="catalogue" index="03" title="Catalogue RISO" description="Recherchez un modèle et consultez les références techniques.">
+        <ModelCatalog />
+      </FolderSection>
 
-      <section className="process"><div className="shell processGrid"><div><p className="kicker gold">Simple et transparent</p><h2>Trois étapes. Une machine remise en service.</h2></div><ol><li><b>01</b><div><strong>Décrivez la panne</strong><span>Modèle, symptômes, message d’erreur et localisation.</span></div></li><li><b>02</b><div><strong>Recevez une première orientation</strong><span>Diagnostic à distance et préparation du déplacement.</span></div></li><li><b>03</b><div><strong>Suivez l’intervention</strong><span>Rendez-vous, devis et historique disponibles.</span></div></li></ol></div></section>
+      <FolderSection id="fonctionnement" index="04" title="Comment fonctionne l’assistance" description="Un parcours simple, du premier signalement au retour en production.">
+        <section className="process"><div className="shell processGrid"><div><p className="kicker gold">Simple et transparent</p><h2>Trois étapes. Une machine remise en service.</h2></div><ol><li><b>01</b><div><strong>Décrivez la panne</strong><span>Modèle, symptômes, message d’erreur et localisation.</span></div></li><li><b>02</b><div><strong>Recevez une première orientation</strong><span>Diagnostic à distance et préparation du déplacement.</span></div></li><li><b>03</b><div><strong>Suivez l’intervention</strong><span>Rendez-vous, devis et historique disponibles.</span></div></li></ol></div></section>
+      </FolderSection>
 
-      <section className="section pricing shell" id="tarifs">
+      <FolderSection id="tarifs" index="05" title="Devis et tarifs" description="Les règles de prix expliquées avant toute intervention payante.">
+      <section className="section pricing shell">
         <div className="sectionHeading"><div><p className="kicker">Des coûts annoncés avant d’agir</p><h2>Un devis lisible sous 24 h ouvrées.</h2></div><p>Le montant dépend du modèle, de la panne, du déplacement et des pièces. Vous recevez le détail avant toute intervention payante.</p></div>
         <div className="pricingGrid">
           <article><span>01</span><h3>Première orientation</h3><p>Analyse des symptômes, photos et codes d’erreur pour préparer la suite.</p></article>
@@ -101,18 +111,25 @@ export default async function Home() {
           <article><span>03</span><h3>Votre accord d’abord</h3><p>L’intervention payante commence uniquement après votre validation.</p></article>
         </div>
       </section>
+      </FolderSection>
 
-      <section className="section requestSection shell" id="demande">
+      <FolderSection id="demande" index="06" title="Ouvrir une demande de dépannage" description="Décrivez la panne et recevez un numéro de dossier.">
+      <section className="section requestSection shell">
         <div className="requestIntro"><p className="kicker">Demande en ligne</p><h2>Expliquez votre problème maintenant.</h2><p>Quelques informations suffisent pour ouvrir votre dossier et préparer le diagnostic.</p><div className="directContact"><strong>Production arrêtée ? N’attendez pas.</strong><span>Appelez directement pour une première orientation.</span><a href={`tel:${phone}`}>Appeler le 07 77 80 80 51</a><a className="whatsappUrgent" href={whatsapp}>Ou écrire sur WhatsApp</a></div></div>
         <RequestForm />
       </section>
+      </FolderSection>
 
-      <section className="section faq shell" id="faq">
+      <FolderSection id="faq" index="07" title="Questions fréquentes" description="Délais, zones d’intervention, devis et garanties.">
+      <section className="section faq shell">
         <div className="sectionHeading"><div><p className="kicker">Questions fréquentes</p><h2>Ce qu’il faut savoir avant une intervention.</h2></div><p>Délais, zone couverte, prix et garanties : les réponses essentielles sont réunies ici.</p></div>
         <div className="faqList">{faqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
       </section>
+      </FolderSection>
 
-      <Reviews />
+      <FolderSection id="avis" index="08" title="Avis clients" description="Les retours publiés par les clients RisoExpert.">
+        <Reviews />
+      </FolderSection>
 
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebookPage} target="_blank" rel="noreferrer">Suivre la page RisoExpert sur Facebook →</a></div></div></section>
 
