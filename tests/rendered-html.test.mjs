@@ -27,7 +27,7 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
 
   const html = await response.text();
   assert.match(html, /<html lang="fr">/i);
-  assert.match(html, /RisoExpert \| Assistance RISO en Côte d’Ivoire et au Cameroun/);
+  assert.match(html, /RisoExpert \| Assistance RISO en Côte d’Ivoire/);
   assert.match(
     html,
     /<meta name="google-site-verification" content="fW1ox3Pn4mb5nef3Lxk6ffyM0kDgtYhxi9cmeTKxRpE"\/>/,
@@ -39,14 +39,10 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   assert.match(html, /linkedin\.com\/company\/risoexpert/);
   assert.match(html, /x\.com\/RisoExpertCI/);
   assert.match(html, /whatsapp\.com\/channel\/0029VaeghXMATRSuL58NHn1x/);
-  assert.match(html, /wa\.me\/23777416692/);
   assert.doesNotMatch(html, /nikaise-doua|DecassanKoui/);
   assert.match(html, /Expliquez votre problème maintenant/);
   assert.match(html, /Devis avant intervention/);
-  assert.match(html, /Côte d’Ivoire 🇨🇮 et Cameroun 🇨🇲/i);
-  assert.match(html, /RisoExpert traverse les frontières/i);
-  assert.match(html, /Douala/);
-  assert.match(html, /Yaoundé/);
+  assert.match(html, /Assistance RISO • Côte d’Ivoire 🇨🇮/i);
   assert.match(html, /guide technique essentiel/i);
   assert.match(html, /Source officielle RISO/i);
   assert.match(html, /Les modèles RISO, actuels et historiques/i);

@@ -1,16 +1,13 @@
 import RequestForm from "./request-form";
 import GoogleSignIn from "./google-sign-in";
-import SocialShare from "./social-share";
 import MachineShowcase from "./machine-showcase";
 import ModelCatalog from "./model-catalog";
-import CountryPresence from "./country-presence";
 import Reviews from "./reviews";
 import { headers } from "next/headers";
 import Image from "next/image";
 
 const phone = "+2250777808051";
 const whatsapp = `https://wa.me/2250777808051?text=${encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.")}`;
-const whatsappCameroon = "https://wa.me/23777416692";
 const whatsappChannel = "https://whatsapp.com/channel/0029VaeghXMATRSuL58NHn1x";
 const telegram = "https://t.me/+WSj_HtJdAts5N2E0";
 const facebookAccount = "https://www.facebook.com/people/Technicien-Riso/61581266351611/";
@@ -22,14 +19,14 @@ const odooSite = "https://risoexpert.odoo.com/";
 
 const services = [
   ["Diagnostic précis", "Photos, vidéo et message d’erreur analysés avant le déplacement."],
-  ["Couverture internationale", "Assistance dans toutes les villes de Côte d’Ivoire et du Cameroun."],
+  ["Couverture nationale", "Assistance dans toutes les villes de Côte d’Ivoire."],
   ["Maintenance préventive", "Contrôles réguliers pour réduire les arrêts de production."],
   ["Suivi professionnel", "Historique des machines, devis, rendez-vous et factures."],
 ];
 
 const faqs = [
   ["Sous quel délai vais-je recevoir une réponse ?", "Pour une demande complète, RisoExpert s’engage à envoyer une première réponse et, si nécessaire, un devis sous 24 heures ouvrées."],
-  ["Quelles zones sont couvertes ?", "Nous accompagnons les clients dans toutes les villes de Côte d’Ivoire et du Cameroun. Le mode d’assistance, le délai et les éventuels frais de déplacement sont confirmés avant votre validation."],
+  ["Quelles zones sont couvertes ?", "Nous accompagnons les clients dans toutes les villes de Côte d’Ivoire. Le mode d’assistance, le délai et les éventuels frais de déplacement sont confirmés avant votre validation."],
   ["Le diagnostic à distance suffit-il toujours ?", "Non. Les photos, vidéos et codes d’erreur permettent une première orientation. Le tarif final n’est confirmé qu’après avoir identifié la panne et les pièces éventuellement nécessaires."],
   ["Comment le prix est-il fixé ?", "Le devis distingue la main-d’œuvre, le déplacement et les pièces. Aucun travail payant n’est engagé sans votre accord préalable."],
   ["L’intervention est-elle garantie ?", "La garantie applicable est précisée sur le devis ou la facture selon la nature de la réparation et les pièces remplacées."],
@@ -50,11 +47,8 @@ export default async function Home() {
     url: `${origin}/`,
     image: `${origin}/og.png`,
     priceRange: "Devis sous 24 h ouvrées",
-    description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire et au Cameroun.",
-    areaServed: [
-      { "@type": "Country", name: "Côte d’Ivoire" },
-      { "@type": "Country", name: "Cameroun" },
-    ],
+    description: "Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire.",
+    areaServed: { "@type": "Country", name: "Côte d’Ivoire" },
     sameAs: [facebookAccount, facebookPage, instagram, linkedin, xProfile, whatsappChannel, telegram],
     knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
     serviceType: ["Diagnostic RISO", "Dépannage de duplicopieurs", "Maintenance préventive", "Réparation RISO"],
@@ -67,7 +61,7 @@ export default async function Home() {
       <header className="topbar">
         <div className="shell nav">
           <a className="logo" href="#accueil" aria-label="RisoExpert accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a>
-          <nav aria-label="Navigation principale"><a href="#nouveautes">Nouveautés</a><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#avis">Avis</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Espace client</a></nav>
+          <nav aria-label="Navigation principale"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#catalogue">Catalogue</a><a href="#avis">Avis</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#demande">Dépannage</a><a href={odooSite}>Espace client</a></nav>
           <GoogleSignIn />
         </div>
       </header>
@@ -76,7 +70,7 @@ export default async function Home() {
         <div className="heroGlow" />
         <div className="shell heroGrid">
           <div className="heroCopy">
-            <p className="kicker gold">Assistance RISO • Côte d’Ivoire 🇨🇮 et Cameroun 🇨🇲</p>
+            <p className="kicker gold">Assistance RISO • Côte d’Ivoire 🇨🇮</p>
             <h1>L’assistance technique RISO <em>simplifiée.</em></h1>
             <p className="heroLead">Déclarez votre panne, envoyez vos photos et recevez l’accompagnement direct d’un technicien qualifié.</p>
             <div className="heroActions"><a className="button goldButton" href={`tel:${phone}`}>Appeler en urgence</a><a className="button ghostButton" href="#demande">Déclarer une panne</a><a className="button ghostButton" href="/api/android-apk">Télécharger l’APK Android</a></div>
@@ -88,35 +82,6 @@ export default async function Home() {
       </section>
 
       <section className="quickStrip"><div className="shell"><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></section>
-
-      <CountryPresence />
-
-      <section className="section launchSection shell" id="nouveautes" aria-labelledby="launch-title">
-        <div className="launchVisual">
-          <Image
-            src="/risoexpert-logo.png"
-            alt="Logo officiel RisoExpert"
-            width={1254}
-            height={1254}
-            sizes="(max-width: 900px) 100vw, 48vw"
-          />
-        </div>
-        <div className="launchCopy">
-          <p className="kicker">RisoExpert évolue</p>
-          <h2 id="launch-title">Une assistance plus riche, plus sûre et plus proche.</h2>
-          <p>Le site et l’application réunissent désormais les outils essentiels pour identifier une machine, transmettre une panne et suivre l’intervention.</p>
-          <div className="launchFeatures">
-            <article><span>01</span><div><h3>Bibliothèque technique RISO</h3><p>Catalogue des familles actuelles et historiques, recherche par modèle et conseils essentiels issus de sources officielles.</p></div></article>
-            <article><span>02</span><div><h3>Côte d’Ivoire et Cameroun</h3><p>Deux contacts nationaux et une prise en charge adaptée à la ville, au modèle et au niveau d’urgence.</p></div></article>
-            <article><span>03</span><div><h3>Avis clients authentifiés</h3><p>Un compte et une photo de profil sont requis pour publier une évaluation visible sur la plateforme.</p></div></article>
-            <article><span>04</span><div><h3>Application Android</h3><p>Déclaration de panne, photos, machines, messages et suivi réunis dans une expérience mobile dédiée.</p></div></article>
-          </div>
-          <div className="launchActions">
-            <a className="button goldButton" href="/api/android-apk">Télécharger l’application</a>
-            <a className="button launchSecondary" href="#catalogue">Explorer les modèles</a>
-          </div>
-        </div>
-      </section>
 
       <section className="section services shell" id="services">
         <div className="sectionHeading"><div><p className="kicker">Une expertise de proximité</p><h2>De la première alerte au retour en production.</h2></div><p>Un interlocuteur unique pour comprendre la panne, préparer l’intervention et suivre chaque machine dans la durée.</p></div>
@@ -149,17 +114,15 @@ export default async function Home() {
 
       <Reviews />
 
-      <div className="shell"><SocialShare /></div>
-
       <section className="finalCta"><div className="shell"><div><p className="kicker gold">Votre partenaire de confiance</p><h2>Ne laissez pas une panne arrêter votre activité.</h2></div><div><a className="button goldButton" href="#demande">Demander un dépannage</a><a className="facebookLink" href={facebookPage} target="_blank" rel="noreferrer">Suivre la page RisoExpert sur Facebook →</a></div></div></section>
 
       <footer className="siteFooter">
         <div className="shell footerLead">
           <div><p className="kicker gold">Assistance technique RISO</p><h2>Un problème sur votre machine&nbsp;?</h2><p>Envoyez le modèle, le code d’erreur, une photo et votre ville. Un technicien vous orientera avant toute intervention.</p></div>
-          <div className="footerLeadActions"><a className="button goldButton" href={whatsapp}>WhatsApp Côte d’Ivoire</a><a className="button footerOutline" href={whatsappCameroon}>WhatsApp Cameroun</a></div>
+          <div className="footerLeadActions"><a className="button goldButton" href={whatsapp}>Écrire sur WhatsApp</a></div>
         </div>
         <div className="shell footerGrid">
-          <div className="footerBrand"><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire et au Cameroun.</p><div className="footerCountries"><span>🇨🇮 Côte d’Ivoire</span><span>🇨🇲 Cameroun</span></div></div>
+          <div className="footerBrand"><a className="logo footerLogo" href="#accueil"><span>R</span><b>Riso<strong>Expert</strong></b></a><p>Diagnostic, maintenance et dépannage de duplicopieurs RISO en Côte d’Ivoire.</p><div className="footerCountries"><span>🇨🇮 Côte d’Ivoire</span></div></div>
           <div><b>Services</b><a href="#services">Diagnostic et dépannage</a><a href="#machines">Machines prises en charge</a><a href="#catalogue">Catalogue RISO</a><a href="#tarifs">Devis et tarifs</a><a href="#demande">Ouvrir une demande</a></div>
           <div><b>Plateformes</b><a href="/api/android-apk">Application Android</a><a href={odooSite}>Site Odoo</a><a href={facebookPage}>Facebook</a><a href={instagram}>Instagram</a><a href={linkedin}>LinkedIn</a><a href={xProfile}>X / Twitter</a></div>
           <div><b>Communauté</b><a href={whatsappChannel}>Chaîne WhatsApp</a><a href={telegram}>Groupe Telegram</a><a href="#avis">Avis clients</a><a href="#faq">Questions fréquentes</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a></div>

@@ -16,10 +16,7 @@ type Review = {
 
 type Account = { name: string; picture: string } | null;
 
-const countryLabel = (country: string) =>
-  country === "CI" ? "🇨🇮 Côte d’Ivoire"
-    : country === "CM" ? "🇨🇲 Cameroun"
-      : `🌍 ${country}`;
+const countryLabel = () => "🇨🇮 Côte d’Ivoire";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -72,7 +69,7 @@ export default function Reviews() {
         ...(accessToken ? { authorization: `Bearer ${accessToken}` } : {}),
       },
       body: JSON.stringify({
-        country: data.get("country"),
+        country: "CI",
         comment: data.get("comment"),
         website: data.get("website"),
         rating,
@@ -97,7 +94,7 @@ export default function Reviews() {
           <div>
             <p className="kicker">Avis clients</p>
             <h2 id="reviews-title">Votre expérience compte.</h2>
-            <p>Attribuez une note et partagez votre retour avec les professionnels des deux pays.</p>
+            <p>Attribuez une note et partagez votre retour avec les professionnels de Côte d’Ivoire.</p>
           </div>
           <div className="ratingSummary" aria-label={`${average.toFixed(1)} étoiles sur 5`}>
             <strong>{reviews.length ? average.toFixed(1) : "—"}</strong>
@@ -137,7 +134,6 @@ export default function Reviews() {
                 >★</button>
               ))}
             </div>
-            <label>Pays<input name="country" required minLength={2} maxLength={60} placeholder="Ex. Sénégal, France, Canada…" /></label>
             <label>Votre commentaire<textarea name="comment" required minLength={10} maxLength={600} rows={4} placeholder="Qualité du diagnostic, délai, accompagnement…" /></label>
             <label className="reviewTrap" aria-hidden="true">Site<input name="website" tabIndex={-1} autoComplete="off" /></label>
             <button className="primary" disabled={sending || !account?.picture}>{sending ? "Publication…" : "Publier mon avis"}</button>

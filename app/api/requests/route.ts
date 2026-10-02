@@ -116,7 +116,7 @@ export async function POST(request: Request) {
   const phone = clean(body.phone, 30);
   const city = clean(body.location, 140);
   const country = clean(body.country, 2).toUpperCase();
-  const allowedCountries = new Set(["CI", "CM"]);
+  const allowedCountries = new Set(["CI"]);
   const location = `${country} — ${city}`;
   const machine = clean(body.machine, 120);
   const urgency = clean(body.urgency, 60);

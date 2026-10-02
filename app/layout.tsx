@@ -6,7 +6,6 @@ import "./legal-consent.css";
 import "./map-dynamic.css";
 import "./machine-showcase.css";
 import "./model-catalog.css";
-import "./country-presence.css";
 import "./reviews.css";
 import "./polish.css";
 
@@ -19,14 +18,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const image = `${protocol}://${host}/og.png`;
   return {
-    title: "RisoExpert | Assistance RISO en Côte d’Ivoire et au Cameroun",
-    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire et au Cameroun. Demande en ligne suivie par un technicien.",
-    keywords: ["RisoExpert", "technicien RISO Côte d’Ivoire", "technicien RISO Cameroun", "dépannage duplicopieur RISO", "maintenance RISO", "réparation RISO Abidjan", "réparation RISO Douala", "réparation RISO Yaoundé"],
+    title: "RisoExpert | Assistance RISO en Côte d’Ivoire",
+    description: "Diagnostic, dépannage et entretien de duplicopieurs RISO en Côte d’Ivoire. Demande en ligne suivie par un technicien.",
+    keywords: ["RisoExpert", "technicien RISO Côte d’Ivoire", "dépannage duplicopieur RISO", "maintenance RISO", "réparation RISO Abidjan"],
     alternates: { canonical: `${protocol}://${host}/` },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
     verification: { google: "fW1ox3Pn4mb5nef3Lxk6ffyM0kDgtYhxi9cmeTKxRpE" },
     icons: { icon: "/favicon.png", shortcut: "/favicon.png" },
-    openGraph: { title: "RisoExpert — Assistance RISO en Côte d’Ivoire et au Cameroun", description: "Diagnostic, dépannage et entretien de duplicopieurs et risographes RISO dans les deux pays.", type: "website", locale: "fr_CI", alternateLocale: ["fr_CM"], siteName: "RisoExpert", images: [{ url: image, width: 1200, height: 630, alt: "RisoExpert — Assistance technique RISO" }] },
+    openGraph: { title: "RisoExpert — Assistance RISO en Côte d’Ivoire", description: "Diagnostic, dépannage et entretien de duplicopieurs et risographes RISO en Côte d’Ivoire.", type: "website", locale: "fr_CI", siteName: "RisoExpert", images: [{ url: image, width: 1200, height: 630, alt: "RisoExpert — Assistance technique RISO" }] },
     twitter: { card: "summary_large_image", title: "RisoExpert", description: "L’expertise RISO, à portée de main.", images: [image] },
   };
 }
