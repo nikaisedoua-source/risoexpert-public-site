@@ -20,6 +20,8 @@
 
 # misc
 .DS_Store
+._*
+*.tsbuildinfo
 *.pem
 
 # debug
@@ -41,3 +43,6 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Source de détourage conservée localement, non utilisée par l'application.
+/public/risoexpert-avatar-single-chroma.png

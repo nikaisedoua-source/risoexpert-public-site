@@ -3,19 +3,32 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
-const [route, form, schema, migration] = await Promise.all([
+const [route, form, schema, migration, reviewsRoute] = await Promise.all([
   readFile(new URL("app/api/requests/route.ts", root), "utf8"),
   readFile(new URL("app/request-form.tsx", root), "utf8"),
   readFile(new URL("db/schema.ts", root), "utf8"),
   readFile(new URL("drizzle/0003_first_veda.sql", root), "utf8"),
+  readFile(new URL("app/api/reviews/route.ts", root), "utf8"),
 ]);
 
 test("valide le formulaire public côté serveur", () => {
   assert.match(route, /body\.legalConsent !== true/);
   assert.match(route, /allowedUrgencies\.has\(urgency\)/);
+  assert.match(route, /allowedCountries\.has\(country\)/);
   assert.match(route, /problem\.length < 10/);
   assert.match(route, /Trop de demandes/);
   assert.match(form, /name="website"/);
+  assert.match(form, /name="country"/);
+});
+
+test("protège les avis publics", () => {
+  assert.match(reviewsRoute, /currentUser\(request\)/);
+  assert.match(reviewsRoute, /photo de profil/);
+  assert.match(reviewsRoute, /profile_picture IS NOT NULL/);
+  assert.match(reviewsRoute, /rating < 1 \|\| rating > 5/);
+  assert.match(reviewsRoute, /Un seul avis peut être publié/);
+  assert.match(reviewsRoute, /clientHash/);
+  assert.doesNotMatch(schema, /ip_address|ipAddress/);
 });
 
 test("ne stocke pas l'adresse IP brute et associe la session disponible", () => {

@@ -1,7 +1,9 @@
+import { SITE_ORIGIN } from "../site-config";
+
 const pages = ["/", "/conditions", "/confidentialite"];
 
-export async function GET(request: Request) {
-  const origin = new URL(request.url).origin;
+export async function GET() {
+  const origin = SITE_ORIGIN;
   const urls = pages
     .map((path) => `<url><loc>${origin}${path}</loc><changefreq>${path === "/" ? "weekly" : "monthly"}</changefreq><priority>${path === "/" ? "1.0" : "0.5"}</priority></url>`)
     .join("");

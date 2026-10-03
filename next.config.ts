@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Serve the catalog assets directly; no image-transform binding is required.
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

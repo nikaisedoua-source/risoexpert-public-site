@@ -37,6 +37,7 @@ export default function RequestForm() {
 
   return (
     <form className="requestForm" onSubmit={submit}>
+      <input name="country" type="hidden" value="CI" />
       <label className="honeypot" aria-hidden="true">
         Site web
         <input name="website" tabIndex={-1} autoComplete="off" />

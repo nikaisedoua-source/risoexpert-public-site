@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   url.searchParams.set("addressdetails", "1");
   const response = await fetch(url, {
     headers: {
-      "user-agent": "RisoExpert/1.0 (+https://risoexpert.odoo.com/)",
+      "user-agent": "RisoExpert/1.0 (+https://risoexpert.website/)",
       "accept-language": "fr",
     },
   });
