@@ -20,7 +20,7 @@ async function render(path = "/") {
   );
 }
 
-test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
+test("rend le site RisoExpert unifié avec dossiers, contacts et SEO", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -28,17 +28,25 @@ test("rend la vitrine commerciale avec ses contacts et son SEO", async () => {
   const html = await response.text();
   assert.match(html, /<html lang="fr">/i);
   assert.match(html, /RisoExpert \| Technicien RISO en Côte d’Ivoire/);
-  assert.match(html, /L’assistance technique RISO/);
+  assert.match(html, /L’expertise RISO, à portée de main/);
+  assert.match(html, /Tout est rangé par dossier/);
+  assert.match(html, /Diagnostic, dépannage, maintenance et suivi machine/);
+  assert.match(html, /Références visibles et publications partenaires vérifiées/);
   assert.match(html, /https:\/\/wa\.me\/2250777808051/);
   assert.match(html, /tel:\+2250777808051/);
-  assert.match(html, /facebook\.com\/share\/1EUQU266gP/);
+  assert.match(html, /facebook\.com\/people\/Techniciens-Riso-ci\/61558758369166/);
+  assert.match(html, /instagram\.com\/risoexpert\.ci/);
+  assert.match(html, /linkedin\.com\/company\/risoexpert/);
+  assert.match(html, /x\.com\/RisoExpertCI/);
+  assert.match(html, /t\.me\/\+WSj_HtJdAts5N2E0/);
   assert.match(html, /Expliquez votre problème maintenant/);
   assert.match(html, /Devis avant intervention/);
   assert.match(html, /Questions fréquentes/);
-  assert.match(html, /Appeler en urgence/);
+  assert.match(html, /Imprimerie Nouvelle Vision/);
   assert.match(html, /href="\/api\/android-apk"/);
-  assert.match(html, /Télécharger l’APK Android/);
+  assert.match(html, /Télécharger l’APK/);
   assert.doesNotMatch(html, /visites enregistrées|premières visites réelles|suivi GPS/i);
+  assert.doesNotMatch(html, /Cameroun/i);
   assert.match(html, /href="\/confidentialite"/);
   assert.match(html, /href="\/conditions"/);
   assert.match(html, /property="og:image" content="https:\/\/risoexpert\.odoo\.com\/og\.png"/);
