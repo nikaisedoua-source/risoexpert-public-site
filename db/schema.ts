@@ -51,3 +51,16 @@ export const userSessions = sqliteTable("user_sessions", {
   expiresAt: text("expires_at").notNull(),
   createdAt: text("created_at").notNull(),
 });
+
+export const customerReviews = sqliteTable("customer_reviews", {
+  id: text("id").primaryKey(),
+  userId: text("user_id"),
+  authorName: text("author_name").notNull(),
+  profilePicture: text("profile_picture"),
+  country: text("country").notNull(),
+  rating: integer("rating").notNull(),
+  comment: text("comment").notNull(),
+  clientHash: text("client_hash").notNull(),
+  status: text("status").notNull().default("published"),
+  createdAt: text("created_at").notNull(),
+});

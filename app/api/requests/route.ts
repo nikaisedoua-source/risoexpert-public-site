@@ -114,7 +114,10 @@ export async function POST(request: Request) {
 
   const name = clean(body.name, 100);
   const phone = clean(body.phone, 30);
-  const location = clean(body.location, 160);
+  const city = clean(body.location, 140);
+  const country = clean(body.country, 2).toUpperCase();
+  const allowedCountries = new Set(["CI"]);
+  const location = `${country} — ${city}`;
   const machine = clean(body.machine, 120);
   const urgency = clean(body.urgency, 60);
   const errorMessage = clean(body.error, 160);
@@ -125,7 +128,8 @@ export async function POST(request: Request) {
     "Critique — production arrêtée",
   ]);
   if (
-    !name || !/^[+()0-9 .-]{8,30}$/.test(phone) || !location || !machine
+    !name || !/^[+()0-9 .-]{8,30}$/.test(phone) || !city
+    || !allowedCountries.has(country) || !machine
     || !allowedUrgencies.has(urgency) || problem.length < 10
     || body.legalConsent !== true
   ) {
