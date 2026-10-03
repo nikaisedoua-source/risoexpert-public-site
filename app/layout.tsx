@@ -6,6 +6,7 @@ import "./legal-consent.css";
 import "./map-dynamic.css";
 import "./machine-showcase.css";
 import "./polish.css";
+import "./risoexpert-identity.css";
 
 const sans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const mono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
