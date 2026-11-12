@@ -1,17 +1,9 @@
 import RequestForm from "./request-form";
-import GoogleSignIn from "./google-sign-in";
-import SocialShare from "./social-share";
-import MachineShowcase from "./machine-showcase";
-import ModelCatalog from "./model-catalog";
-import Reviews from "./reviews";
-import CinematicMachine from "./cinematic-machine";
-import { FolderDeck, FolderPanel } from "./service-folders";
 import { SITE_ORIGIN } from "./site-config";
 
 const phone = "+2250777808051";
 const displayPhone = "+225 07 77 80 80 51";
 const whatsapp = "https://wa.me/2250777808051?text=" + encodeURIComponent("Bonjour RisoExpert, j’ai besoin d’un dépannage RISO.");
-const whatsappChannel = "https://whatsapp.com/channel/0029VaeghXMATRSuL58NHn1x";
 const telegram = "https://t.me/+WSj_HtJdAts5N2E0";
 const facebookPage = "https://www.facebook.com/people/Techniciens-Riso-ci/61558758369166/";
 const instagram = "https://www.instagram.com/risoexpert.ci/";
@@ -19,111 +11,90 @@ const linkedin = "https://www.linkedin.com/company/risoexpert/";
 const xProfile = "https://x.com/RisoExpertCI";
 
 const services = [
-  ["Diagnostic RISO", "Analyse du modèle, du code d’erreur, des photos et des symptômes pour préparer une intervention ciblée."],
-  ["Dépannage sur site", "Intervention à Abidjan et étude des demandes ailleurs en Côte d’Ivoire, avec déplacement annoncé au préalable."],
-  ["Maintenance préventive", "Contrôles, nettoyage technique et réglages pour limiter les arrêts de production."],
-  ["Suivi machine", "Un même dossier pour votre demande, les échanges techniques et la préparation du devis."],
+  ["Diagnostic", "Identification précise de la panne à partir du modèle, du code d’erreur et de photos."],
+  ["Dépannage", "Réparation ciblée pour remettre votre machine en production avec le moins d’arrêt possible."],
+  ["Maintenance", "Entretien régulier pour prévenir les pannes et prolonger la durée de vie de vos équipements."],
+  ["Suivi machine", "Un historique des interventions pour anticiper et décider en connaissance de cause."],
 ];
+
 const faqs = [
-  ["Sous quel délai vais-je recevoir une réponse ?", "Pour une demande complète, RisoExpert vise une première réponse sous 24 heures ouvrées."],
-  ["Quelles zones sont couvertes ?", "Les interventions sur site sont proposées à Abidjan. Les autres villes de Côte d’Ivoire sont étudiées au cas par cas."],
-  ["Le diagnostic à distance suffit-il toujours ?", "Les photos et codes d’erreur permettent de préparer la suite. Certaines pannes nécessitent un contrôle sur place."],
-  ["Comment le prix est-il fixé ?", "Le devis sépare la main-d’œuvre, le déplacement et les pièces. Aucun travail payant ne commence sans validation."],
-  ["L’intervention est-elle garantie ?", "La garantie applicable est précisée sur le devis ou la facture selon la réparation et les pièces remplacées."],
-  ["Que faire si toute la production est arrêtée ?", "Appelez directement le " + displayPhone + " avec le modèle, le code d’erreur et votre commune."],
-];
-const socials = [
-  ["WhatsApp", whatsapp, "Contacter le technicien"],
-  ["Chaîne WhatsApp", whatsappChannel, "Suivre les annonces"],
-  ["Telegram", telegram, "Rejoindre l’assistance"],
-  ["Facebook", facebookPage, "L’actualité et les partenaires"],
-  ["Instagram", instagram, "Les interventions en images"],
-  ["LinkedIn", linkedin, "La page entreprise"],
-  ["X", xProfile, "Les actualités RisoExpert"],
+  ["Y a-t-il un devis avant l’intervention ?", "Oui. Après analyse de votre dossier, un devis est proposé et l’intervention n’est engagée qu’avec votre accord."],
+  ["Quelles informations dois-je fournir ?", "Le modèle, la description de la panne, le code d’erreur affiché et, si possible, quelques photos ou une courte vidéo."],
+  ["Quels sont les délais d’intervention ?", "Ils dépendent de votre localisation et de la nature de la panne. Ils vous sont précisés dès le premier échange."],
+  ["Quelles zones couvrez-vous ?", "Nous intervenons en Côte d’Ivoire. Indiquez votre ville dans votre demande pour confirmer les conditions d’intervention."],
+  ["Êtes-vous affiliés à la marque RISO ?", "Non. RisoExpert est un service technique indépendant. RISO est une marque appartenant à son propriétaire respectif."],
 ];
 
 export default function Home() {
   const schema = {
-    "@context": "https://schema.org", "@type": ["ProfessionalService", "LocalBusiness"],
-    name: "RisoExpert", slogan: "L’expertise RISO, à portée de main", telephone: phone,
-    url: SITE_ORIGIN + "/", image: SITE_ORIGIN + "/og.png", priceRange: "Devis avant intervention",
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "LocalBusiness"],
+    name: "RisoExpert",
+    slogan: "L’expertise RISO, à portée de main",
+    telephone: phone,
+    url: SITE_ORIGIN + "/",
+    image: SITE_ORIGIN + "/og.png",
     description: "Diagnostic, dépannage et maintenance de machines RISO en Côte d’Ivoire.",
-    areaServed: "Côte d’Ivoire", sameAs: [facebookPage, instagram, linkedin, xProfile, whatsappChannel, telegram],
+    areaServed: "Côte d’Ivoire",
+    sameAs: [facebookPage, instagram, linkedin, xProfile, telegram],
     knowsAbout: ["RISO", "duplicopieur", "risographe", "maintenance imprimante", "dépannage RISO"],
     address: { "@type": "PostalAddress", addressLocality: "Abidjan", addressCountry: "CI" },
   };
+
   return (
-    <main className="rx-site rx-cinematic">
+    <main className="rx-site">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <a className="rx-skip" href="#dossiers">Accéder aux dossiers</a>
-      <header className="rx-topbar">
-        <div className="rx-shell rx-nav">
-          <a className="rx-brand" href="#accueil" aria-label="RisoExpert accueil"><span className="rx-brand-mark">R<span>•</span></span><b>Riso<strong>Expert</strong><small>ASSISTANCE TECHNIQUE RISO</small></b></a>
-          <nav aria-label="Navigation principale"><a href="#dossiers">Explorer</a><a href="#machines">Machines</a><a href="#partenaires">Partenaires</a><a href="#contact">Contact</a></nav>
-          <div className="rx-account"><GoogleSignIn /></div>
-          <a className="rx-nav-contact" href={whatsapp}>Parlons de votre machine</a>
+      <a className="skip-link" href="#services">Aller au contenu</a>
+
+      <header className="site-header">
+        <div className="wrap nav-bar">
+          <a className="brand" href="#accueil" aria-label="RisoExpert, accueil">
+            <span className="logo-mark">R</span>
+            <span><b>RisoExpert</b><small>Assistance technique RISO</small></span>
+          </a>
+          <nav className="desktop-nav" aria-label="Navigation principale">
+            <a href="#services">Services</a><a href="#machines">Machines</a><a href="#methode">Méthode</a><a href="#demande">Dépannage</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+          </nav>
+          <a className="button button-primary header-cta" href={whatsapp} target="_blank" rel="noreferrer">Parlons de votre machine</a>
+          <details className="mobile-menu"><summary aria-label="Ouvrir le menu">☰</summary><nav aria-label="Menu mobile"><a href="#services">Services</a><a href="#machines">Machines</a><a href="#methode">Méthode</a><a href="#demande">Dépannage</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav></details>
         </div>
       </header>
 
-      <section className="rx-hero" id="accueil" aria-labelledby="hero-title">
-        <div className="rx-hero-grid-lines" aria-hidden="true" />
-        <div className="rx-hero-wordmark" aria-hidden="true">RISO</div>
-        <div className="rx-shell rx-hero-grid">
-          <div className="rx-hero-copy">
-            <div className="rx-kicker"><span className="rx-country">CI</span> L’EXPERTISE RISO · CÔTE D’IVOIRE</div>
-            <h1 id="hero-title">L’expertise.<br /><em>Sans interruption.</em></h1>
-            <p className="rx-signature">L’expertise RISO, à portée de main.</p>
-            <p className="rx-lead">Derrière chaque impression, une machine qui compte.<br className="rx-desktop-break" /> Diagnostic, dépannage et maintenance : nous prenons le relais.</p>
-            <div className="rx-actions"><a className="rx-button rx-primary" href="#demande"><span className="rx-button-symbol" aria-hidden="true">+</span> Ouvrir un dossier</a><a className="rx-button rx-secondary" href={"tel:" + phone}>Appeler un technicien</a></div>
-            <div className="rx-hero-assurance"><span>Devis avant intervention</span><span>Contact direct</span></div>
+      <section className="hero" id="accueil">
+        <div className="wrap hero-grid">
+          <div className="hero-copy">
+            <span className="eyebrow">Expertise RISO · Côte d’Ivoire</span>
+            <h1>L’expertise RISO. <em>Sans interruption.</em></h1>
+            <p className="hero-lead">Derrière chaque impression, une machine qui compte. Diagnostic, dépannage et maintenance : nous prenons le relais, pour que votre production ne s’arrête pas.</p>
+            <div className="hero-actions"><a className="button button-primary" href="#demande">Ouvrir un dossier</a><a className="button button-outline" href={`tel:${phone}`}>Appeler un technicien</a></div>
+            <div className="trust-chips"><span>Devis avant intervention</span><span>Contact direct avec un technicien</span><span>Service indépendant</span></div>
           </div>
-          <CinematicMachine />
+          <div className="machine-card">
+            <div className="machine-image"><img src="/machines/mh9350.png" alt="Duplicopieur bicolore RISO MH9350" width="360" height="260" /></div>
+            <h2>RISOGRAPH MH9350</h2><p>Duplicopieur bicolore</p>
+            <div className="model-tags"><span>MH9350</span><span>SF9350</span><span>FT5430</span></div>
+          </div>
         </div>
-        <div className="rx-shell rx-hero-bottom"><span>DIAGNOSTIC / MAINTENANCE / DÉPANNAGE</span><a href="#dossiers">Explorer les dossiers <span aria-hidden="true">⌄</span></a><span>ABIDJAN · CÔTE D’IVOIRE</span></div>
       </section>
 
-      <section className="rx-strip" aria-label="Publics accompagnés"><div className="rx-shell"><p>Au service de vos impressions.</p><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></section>
+      <div className="audience-strip"><div className="wrap"><span className="strip-label">Au service de</span><span>Imprimeries</span><span>Écoles</span><span>Administrations</span><span>Associations</span><span>Entreprises</span></div></div>
 
-      <section className="rx-section rx-shell" id="dossiers" aria-labelledby="dossiers-title">
-        <div className="rx-section-heading">
-          <div><p className="rx-kicker">01 / VOTRE ESPACE RISOEXPERT</p><h2 id="dossiers-title">Tout commence<br /><em>par le bon dossier.</em></h2></div>
-          <p>Votre machine. Votre besoin. Le bon interlocuteur.<br />Choisissez un dossier pour accéder à l’essentiel.</p>
-        </div>
-        <FolderDeck>
-          <FolderPanel id="services" number="01" title="Services" summary="Diagnostic, dépannage, maintenance et suivi machine.">
-            <div className="rx-dialog-intro"><p className="rx-kicker">DE LA PANNE À LA REPRISE</p><h3>Une expertise au service de votre production.</h3></div>
-            <div className="rx-dialog-grid">{services.map(([title, text], i) => <article key={title}><span className="rx-detail-number">0{i + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
-            <a className="rx-button rx-primary rx-dialog-cta" href="#demande">Ouvrir un dossier</a>
-          </FolderPanel>
-          <FolderPanel id="machines" number="02" title="Machines" summary="Duplicopieurs, ComColor et presses de production."><MachineShowcase /></FolderPanel>
-          <FolderPanel id="catalogue" number="03" title="Catalogue" summary="Identifiez votre modèle parmi les références RISO."><ModelCatalog /></FolderPanel>
-          <FolderPanel id="demande" number="04" title="Dépannage" summary="Le modèle. La panne. Les photos. Votre dossier.">
-            <div className="rx-request-layout"><div><p className="rx-kicker">DEMANDE EN LIGNE</p><h3>Expliquez votre problème maintenant.</h3><p>Modèle, code d’erreur, photos et commune : ces informations permettent de préparer le diagnostic.</p><div className="rx-request-steps"><span><b>01</b> Identifiez la machine</span><span><b>02</b> Décrivez la panne</span><span><b>03</b> Envoyez votre demande</span></div><p>Production arrêtée ?</p><a className="rx-button rx-primary" href={"tel:" + phone}>Appeler le {displayPhone}</a></div><RequestForm /></div>
-          </FolderPanel>
-          <FolderPanel id="faq" number="05" title="FAQ et devis" summary="Délais, zones couvertes et devis avant intervention."><div className="rx-faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></FolderPanel>
-          <FolderPanel id="avis" number="06" title="Avis clients" summary="Les retours des clients. Leur expérience RisoExpert."><Reviews /></FolderPanel>
-          <FolderPanel id="contact" number="07" title="Contact et réseaux" summary="Un contact direct et toutes nos communautés.">
-            <div className="rx-contact-feature"><p className="rx-kicker">UN SEUL SITE OFFICIEL</p><a href={SITE_ORIGIN + "/"}>risoexpert.website</a><p>Retrouvez les services RisoExpert et partagez cette adresse.</p></div>
-            <div className="rx-social-grid">{socials.map(([name, href, text]) => <a key={name} href={href} target="_blank" rel="noreferrer"><strong>{name}</strong><span>{text}</span></a>)}</div><SocialShare />
-          </FolderPanel>
-          <FolderPanel id="partenaires" number="08" title="Partenaires" summary="Celles et ceux qui font avancer l’impression.">
-            <div className="rx-partner-card"><p className="rx-kicker">IMPRESSION & COLLABORATION</p><h3>Imprimerie Nouvelle Vision</h3><p>Retrouvez la publication consacrée à ce partenaire sur notre page Facebook.</p><a className="rx-button rx-secondary" href="https://facebook.com/share/1JWksSV29QP/" target="_blank" rel="noreferrer">Voir la publication Facebook</a></div>
-          </FolderPanel>
-        </FolderDeck>
-        <div className="rx-directory-foot"><span>08 DOSSIERS · UN SEUL INTERLOCUTEUR</span><a href="/api/android-apk">Télécharger l’APK Android</a></div>
-      </section>
+      <section className="section" id="services"><div className="wrap"><div className="section-heading"><span className="eyebrow">Nos services</span><h2>Un seul interlocuteur, de la panne au suivi.</h2><p>Une intervention claire et structurée pour garder vos machines RISO disponibles.</p></div><div className="card-grid services-grid">{services.map(([title, text], index) => <article className="card" key={title}><span className="card-icon">0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
 
-      <section className="rx-final" id="demande-direct">
-        <div className="rx-shell rx-final-grid"><div className="rx-final-monogram" aria-hidden="true">R.</div><div><p className="rx-kicker">02 / REMETTONS VOTRE PRODUCTION EN MOUVEMENT</p><h2>Votre prochaine impression<br /><em>commence ici.</em></h2><p>Une panne ne doit pas bloquer votre production.<br />Un modèle, un code d’erreur, une photo. Nous préparons la suite.</p><div className="rx-final-actions"><a className="rx-button rx-primary" href="#demande">Ouvrir un dossier</a><a className="rx-button rx-secondary" href={whatsapp}>Écrire sur WhatsApp</a></div></div></div>
-      </section>
+      <section className="section machines-section" id="machines"><div className="wrap"><div className="section-heading"><span className="eyebrow">Machines</span><h2>Les équipements RISO que nous prenons en charge.</h2><p>Identifiez votre modèle et ouvrez un dossier : nous vous orientons vers la bonne solution.</p></div><div className="card-grid three-grid"><article className="card"><span className="card-label">Duplicopieurs</span><h3>Séries MH, SF, FT…</h3><p>Duplicopieurs mono et bicolores, dont les modèles MH9350, SF9350 et FT5430.</p></article><article className="card"><span className="card-label">ComColor</span><h3>Imprimantes jet d’encre</h3><p>Gamme ComColor pour l’impression à grande vitesse.</p></article><article className="card"><span className="card-label">Production</span><h3>Presses de production</h3><p>Équipements destinés aux volumes élevés, en imprimerie ou en administration.</p></article></div><p className="muted-note">Votre modèle n’est pas listé ? Écrivez-nous, nous vérifions pour vous.</p></div></section>
 
-      <footer className="rx-footer"><div className="rx-shell rx-footer-grid">
-        <div><a className="rx-brand" href="#accueil"><span className="rx-brand-mark">R<span>•</span></span><b>Riso<strong>Expert</strong></b></a><p>L’expertise RISO, à portée de main.</p><a className="rx-official-domain" href={SITE_ORIGIN + "/"}>risoexpert.website</a></div>
-        <div><b>Contact direct</b><a href={"tel:" + phone}>{displayPhone}</a><a href={whatsapp}>WhatsApp</a><a href={telegram}>Telegram</a></div>
-        <div><b>RisoExpert</b><a href={facebookPage}>Facebook</a><a href={instagram}>Instagram</a><a href={linkedin}>LinkedIn entreprise</a><a href={xProfile}>X</a></div>
-        <div><b>Informations</b><a href="/api/android-apk">Application Android</a><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a><a href="#faq">Questions fréquentes</a></div>
-      </div><div className="rx-shell rx-footer-bottom"><small>© 2026 RisoExpert · Côte d’Ivoire</small><small>Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</small></div></footer>
-      <a className="rx-floating" href={whatsapp} aria-label="Contacter RisoExpert sur WhatsApp"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-12 7l-5 1.5 1.5-5a8 8 0 1 1 15.5-3.5Z" stroke="currentColor" strokeWidth="1.5"/><path d="M8.5 7.5c.5 4 2.5 6 6.5 7l1-2-2-1-.8 1c-1.5-.6-2.6-1.7-3.2-3.2l1-.8-1-2-1.5 1Z" stroke="currentColor" strokeWidth="1.3"/></svg><span>Parlons RISO</span></a>
+      <section className="process-section" id="methode"><div className="wrap"><div className="section-heading inverse"><span className="eyebrow">Comment ça marche</span><h2>Un dossier. Quatre étapes.</h2><p>Un modèle, un code d’erreur, une photo : nous préparons la suite.</p></div><div className="card-grid process-grid">{[["Décrivez la panne", "Modèle, symptômes, code d’erreur et photos si possible."], ["Diagnostic", "Un technicien analyse votre dossier et vous répond directement."], ["Devis", "Vous validez un devis avant toute intervention."], ["Intervention", "Réparation, essais et remise en service de la machine."]].map(([title, text], index) => <article className="process-step" key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
+
+      <section className="request-section" id="demande"><div className="wrap request-grid"><div className="request-intro"><span className="eyebrow">Dépannage</span><h2>Ouvrez votre dossier en une minute.</h2><p>Remplissez ce court formulaire : votre demande est enregistrée et transmise à un technicien.</p><ul><li>Réponse directe, sans intermédiaire</li><li>Devis avant toute intervention</li><li>Un numéro de dossier pour suivre votre demande</li></ul><a className="direct-contact" href={`tel:${phone}`}><small>Production arrêtée ?</small><b>{displayPhone}</b></a></div><RequestForm /></div></section>
+
+      <section className="section" id="faq"><div className="wrap narrow"><div className="section-heading"><span className="eyebrow">FAQ et devis</span><h2>Questions fréquentes</h2></div><div className="faq-list">{faqs.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}</summary><p>{answer}</p></details>)}</div></div></section>
+
+      <section className="section cta-section"><div className="wrap cta-band"><div><h2>Vous nous avez fait confiance ? Partagez votre expérience.</h2><p>Vos retours aident d’autres utilisateurs de machines RISO à choisir un service fiable.</p></div><a className="button button-primary" href={facebookPage} target="_blank" rel="noreferrer">Donner mon avis</a></div></section>
+
+      <section className="section contact-section" id="contact"><div className="wrap contact-grid"><div><span className="eyebrow">Contact et réseaux</span><h2>Un contact direct.</h2><p>Appelez, écrivez ou rejoignez la communauté des techniciens et utilisateurs RISO.</p><div className="social-links"><a href={facebookPage} target="_blank" rel="noreferrer">Facebook</a><a href={instagram} target="_blank" rel="noreferrer">Instagram</a><a href={linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href={xProfile} target="_blank" rel="noreferrer">X</a></div></div><div className="contact-list"><a href={`tel:${phone}`}><span>☎</span><div><b>{displayPhone}</b><small>Appeler un technicien</small></div></a><a href={whatsapp} target="_blank" rel="noreferrer"><span>◌</span><div><b>WhatsApp</b><small>Réponse directe</small></div></a><a href={telegram} target="_blank" rel="noreferrer"><span>↗</span><div><b>Telegram</b><small>Communauté RISO</small></div></a></div></div></section>
+
+      <footer><div className="wrap footer-grid"><div><a className="brand" href="#accueil"><span className="logo-mark">R</span><span><b>RisoExpert</b></span></a><p>L’expertise RISO, à portée de main.</p></div><div><h3>Navigation</h3><a href="#services">Services</a><a href="#machines">Machines</a><a href="#demande">Dépannage</a><a href="#faq">FAQ</a></div><div><h3>Contact</h3><a href={`tel:${phone}`}>{displayPhone}</a><a href={whatsapp}>WhatsApp</a><a href={telegram}>Telegram</a></div><div><h3>Informations</h3><a href="/conditions">Conditions d’utilisation</a><a href="/confidentialite">Confidentialité</a><a href="/api/android-apk">Application Android</a></div></div><div className="wrap legal">© 2026 RisoExpert · Côte d’Ivoire. Service technique indépendant. RISO est une marque appartenant à son propriétaire respectif.</div></footer>
+      <a className="floating-whatsapp" href={whatsapp} target="_blank" rel="noreferrer" aria-label="Écrire sur WhatsApp">◌ WhatsApp</a>
     </main>
   );
 }
